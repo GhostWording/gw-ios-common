@@ -7,6 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import "ServerCommunication.h"
+#import "GWDataManager.h"
+#import "GWText.h"
+#import "GWCoreDataManager.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +21,50 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [GWCoreDataManager sharedInstance];
+    
+    
+    GWDataManager *dataMan = [[GWDataManager alloc] init];
+    [dataMan downloadTextsForIntention:@"016E91" withCompletion:^(NSArray *theTexts, NSError *error) {
+        
+        NSLog(@"performed block");
+                
+        for (GWText *text in [dataMan fetchTexts]) {
+            NSLog(@"the text is: %@", text);
+        }
+        
+    }];
+    
+    /*
+    ServerCommunication *serverComm = [[ServerCommunication alloc] initWithAreaName:@"IThinkOfYou"];
+    [serverComm downloadTextsWithIntentionId:@"016E91" withCompletion:^(NSArray *theTexts, NSError *error) {
+        
+        NSLog(@"block repsonse for text download with id");
+        
+    }];
+    
+     */
+     
+    /*
+    [serverComm downloadTextsWithIntentionSlug:@"I-think-of-you" withCompletion:^(NSArray *theTexts, NSError *error) {
+       
+        NSLog(@"block response for text download with slug: %@", theTexts);
+        
+    }];
+    
+    [serverComm downloadIntentionsWithArea:@"IThinkOfYou" withCompletion:^(NSArray *intentions, NSError *error) {
+       
+        NSLog(@"block response for intentions for area: %@ and intentions: %@", @"IThinkOfYou", intentions);
+        
+    }];
+    
+    [serverComm downloadAreasWithCompletion:^(NSArray *theAreas, NSError *error) {
+       
+        NSLog(@"block response for area: %@", theAreas);
+        
+    }];*/
+    
     return YES;
 }
 
@@ -28,6 +76,9 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    [[[GWCoreDataManager sharedInstance] mainObjectContext] save:nil];
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -41,7 +92,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
-    [self saveContext];
+    //[self saveContext];
 }
 
 #pragma mark - Core Data stack
