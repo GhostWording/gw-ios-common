@@ -96,6 +96,27 @@ const NSString *apiPath = @"http://api.cvd.io/";
 
 }
 
+
+-(void)downloadTextsWithIntentionsIds:(NSArray *)theIntentionIds withCompletion:(void (^)(BOOL finished, NSArray *, NSError *))block {
+    [block copy];
+    
+    __block int numTextDownloads = 0;
+    int numTextDownloadsToComplete = (int)theIntentionIds.count;
+    
+    for (NSString *intentionId in theIntentionIds) {
+        
+        [self downloadTextsWithIntentionId:intentionId withCompletion:^(NSArray *texts, NSError *error) {
+           
+            numTextDownloads = numTextDownloads + 1;
+            
+            
+            
+        }];
+    }
+    
+}
+
+
 -(void)downloadTextsWithIntentionId:(NSString *)theIntentionId withCompletion:(void (^)(NSArray *, NSError *))block {
     [block copy];
     
@@ -205,7 +226,7 @@ const NSString *apiPath = @"http://api.cvd.io/";
 
 #pragma mark - Area Downloading
 
--(void)downloadAreasWithCompletion:(void (^)(NSArray *, NSError *))block {
+-(void)downloadAllAreasWithCompletion:(void (^)(NSArray *, NSError *))block {
     [block copy];
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/areas", apiPath]];
@@ -225,6 +246,29 @@ const NSString *apiPath = @"http://api.cvd.io/";
         block(array, error);
         
     }];
+}
+
+-(void)downloadArea:(NSString *)theAreaName withCompletion:(void (^)(NSArray *, NSError *))block {
+    [block copy];
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", apiPath, theAreaName]];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:_acceptLanguage forHTTPHeaderField:@"Accept-Language"];
+    
+    [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+       
+        NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        
+        NSLog(@"Received are: %@", array);
+        
+        block(array, error);
+        
+    }];
+    
 }
 
 @end

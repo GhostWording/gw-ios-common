@@ -29,12 +29,35 @@
     [dataMan downloadTextsForIntention:@"016E91" withCompletion:^(NSArray *theTexts, NSError *error) {
         
         NSLog(@"performed block");
-                
-        for (GWText *text in [dataMan fetchTexts]) {
-            NSLog(@"the text is: %@", text);
-        }
+        
+        GWText *text = [[dataMan fetchTexts] firstObject];
+        NSLog(@"the text is: %@", text);
+        NSLog(@"all texts are: %d", (int)[dataMan fetchTexts].count);
+        NSLog(@"all texts for intention: %d", (int)[dataMan fetchTextsForIntentionId:@"016E91"].count);
+    }];
+    
+    [dataMan downloadIntentionsWithArea:@"IThinkOfYou" withCompletion:^(NSArray *intentionIds, NSError *error) {
+        NSLog(@"finished downloading intentions with area");
+    }];
+    
+    [dataMan downloadAllAreasWithCompletion:^(NSArray *areaIds, NSError *error) {
+       
+        NSLog(@"Finished download all areas");
         
     }];
+    
+    [dataMan downloadArea:@"IThinkOfYou" withCompletion:^(NSString *areaId, NSError *error) {
+        
+        NSLog(@"finished downloading area");
+        
+    }];
+    
+    [dataMan downloadTextsForIntentions:@[@"016E91", @"5CDCF2"] withCompletion:^(NSArray *textIds, NSError *error) {
+        NSLog(@"Downloadings texts for all intentions");
+        NSLog(@"All texts for intentions: %@, number of texts: %d", @[@"016E91", @"5CDCF2"], (int)[dataMan fetchTextsForIntentionIds:@[@"016E91", @"5CDCF2"]].count);
+    }];
+    
+    
     
     /*
     ServerCommunication *serverComm = [[ServerCommunication alloc] initWithAreaName:@"IThinkOfYou"];
