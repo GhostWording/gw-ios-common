@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		884746D61B62E37200F37627 /* GWDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 884746D51B62E37200F37627 /* GWDataManager.m */; };
+		8875EAB91B6FBA81000AE935 /* GWIntentionPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8875EAB81B6FBA81000AE935 /* GWIntentionPresenter.m */; };
+		8875EAC01B70F8DF000AE935 /* GWLocalizedBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8875EABF1B70F8DF000AE935 /* GWLocalizedBundle.m */; };
+		8875EAC11B7109A8000AE935 /* IntentionLocalizedStrings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8875EAC31B7109A8000AE935 /* IntentionLocalizedStrings.strings */; };
 		889DB6AD1B5DB15500194FDE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 889DB6AC1B5DB15500194FDE /* main.m */; };
 		889DB6B01B5DB15500194FDE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 889DB6AF1B5DB15500194FDE /* AppDelegate.m */; };
 		889DB6B31B5DB15500194FDE /* GWFramework.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 889DB6B11B5DB15500194FDE /* GWFramework.xcdatamodeld */; };
@@ -40,6 +43,17 @@
 /* Begin PBXFileReference section */
 		884746D41B62E37200F37627 /* GWDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWDataManager.h; sourceTree = "<group>"; };
 		884746D51B62E37200F37627 /* GWDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWDataManager.m; sourceTree = "<group>"; };
+		8875EAB71B6FBA81000AE935 /* GWIntentionPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWIntentionPresenter.h; sourceTree = "<group>"; };
+		8875EAB81B6FBA81000AE935 /* GWIntentionPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWIntentionPresenter.m; sourceTree = "<group>"; };
+		8875EABE1B70F8DF000AE935 /* GWLocalizedBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWLocalizedBundle.h; sourceTree = "<group>"; };
+		8875EABF1B70F8DF000AE935 /* GWLocalizedBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWLocalizedBundle.m; sourceTree = "<group>"; };
+		8875EAC41B7109AD000AE935 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/IntentionLocalizedStrings.strings; sourceTree = "<group>"; };
+		8875EAC51B7109FF000AE935 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		8875EAC61B7109FF000AE935 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		8875EAC71B7109FF000AE935 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/IntentionLocalizedStrings.strings; sourceTree = "<group>"; };
+		8875EAC81B710A08000AE935 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
+		8875EAC91B710A08000AE935 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		8875EACA1B710A08000AE935 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/IntentionLocalizedStrings.strings; sourceTree = "<group>"; };
 		889DB6A71B5DB15500194FDE /* GWFramework.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GWFramework.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		889DB6AB1B5DB15500194FDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		889DB6AC1B5DB15500194FDE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -110,6 +124,49 @@
 			name = "Server Communication";
 			sourceTree = "<group>";
 		};
+		8875EAB41B6FB3FE000AE935 /* PresentationObjects */ = {
+			isa = PBXGroup;
+			children = (
+				8875EABA1B70E3AF000AE935 /* String Localization */,
+				8875EAB61B6FB54D000AE935 /* Area Presentation Object */,
+				8875EAB51B6FB53A000AE935 /* Intention Presentation Object */,
+			);
+			name = PresentationObjects;
+			sourceTree = "<group>";
+		};
+		8875EAB51B6FB53A000AE935 /* Intention Presentation Object */ = {
+			isa = PBXGroup;
+			children = (
+				8875EAB71B6FBA81000AE935 /* GWIntentionPresenter.h */,
+				8875EAB81B6FBA81000AE935 /* GWIntentionPresenter.m */,
+			);
+			name = "Intention Presentation Object";
+			sourceTree = "<group>";
+		};
+		8875EAB61B6FB54D000AE935 /* Area Presentation Object */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Area Presentation Object";
+			sourceTree = "<group>";
+		};
+		8875EABA1B70E3AF000AE935 /* String Localization */ = {
+			isa = PBXGroup;
+			children = (
+				8875EAC31B7109A8000AE935 /* IntentionLocalizedStrings.strings */,
+			);
+			name = "String Localization";
+			sourceTree = "<group>";
+		};
+		8875EABD1B70F897000AE935 /* Localized Bundle */ = {
+			isa = PBXGroup;
+			children = (
+				8875EABE1B70F8DF000AE935 /* GWLocalizedBundle.h */,
+				8875EABF1B70F8DF000AE935 /* GWLocalizedBundle.m */,
+			);
+			name = "Localized Bundle";
+			sourceTree = "<group>";
+		};
 		889DB69E1B5DB15500194FDE = {
 			isa = PBXGroup;
 			children = (
@@ -136,6 +193,7 @@
 				889DB6B41B5DB15500194FDE /* ViewController.h */,
 				889DB6B51B5DB15500194FDE /* ViewController.m */,
 				889DB6B71B5DB15500194FDE /* Main.storyboard */,
+				8875EAB41B6FB3FE000AE935 /* PresentationObjects */,
 				889DB6D71B5E83FE00194FDE /* ManagedObjects */,
 				889DB6D31B5DB9B400194FDE /* Managers & Server */,
 				889DB6BA1B5DB15500194FDE /* Images.xcassets */,
@@ -175,6 +233,7 @@
 		889DB6D31B5DB9B400194FDE /* Managers & Server */ = {
 			isa = PBXGroup;
 			children = (
+				8875EABD1B70F897000AE935 /* Localized Bundle */,
 				889DB6DB1B5E8AD900194FDE /* Core Data Manager */,
 				884746D21B62E31E00F37627 /* Data Manager */,
 				884746D31B62E35300F37627 /* Server Communication */,
@@ -307,6 +366,8 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
+				es,
 			);
 			mainGroup = 889DB69E1B5DB15500194FDE;
 			productRefGroup = 889DB6A81B5DB15500194FDE /* Products */;
@@ -326,6 +387,7 @@
 			files = (
 				889DB6B91B5DB15500194FDE /* Main.storyboard in Resources */,
 				889DB6BE1B5DB15500194FDE /* LaunchScreen.xib in Resources */,
+				8875EAC11B7109A8000AE935 /* IntentionLocalizedStrings.strings in Resources */,
 				889DB6BB1B5DB15500194FDE /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -352,10 +414,12 @@
 				889DB6E91B5EA63C00194FDE /* GWIntentionLabel.m in Sources */,
 				889DB6D61B5DBA0000194FDE /* ServerCommunication.m in Sources */,
 				889DB6B31B5DB15500194FDE /* GWFramework.xcdatamodeld in Sources */,
+				8875EAB91B6FBA81000AE935 /* GWIntentionPresenter.m in Sources */,
 				88E6A7101B5EC29900DF93A3 /* GWArea.m in Sources */,
 				889DB6E11B5E9FAE00194FDE /* GWTag.m in Sources */,
 				88E6A70A1B5EC29800DF93A3 /* GWImage.m in Sources */,
 				889DB6B61B5DB15500194FDE /* ViewController.m in Sources */,
+				8875EAC01B70F8DF000AE935 /* GWLocalizedBundle.m in Sources */,
 				889DB6DE1B5E8AF200194FDE /* GWCoreDataManager.m in Sources */,
 				889DB6AD1B5DB15500194FDE /* main.m in Sources */,
 			);
@@ -380,10 +444,22 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		8875EAC31B7109A8000AE935 /* IntentionLocalizedStrings.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8875EAC41B7109AD000AE935 /* en */,
+				8875EAC71B7109FF000AE935 /* fr */,
+				8875EACA1B710A08000AE935 /* es */,
+			);
+			name = IntentionLocalizedStrings.strings;
+			sourceTree = "<group>";
+		};
 		889DB6B71B5DB15500194FDE /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				889DB6B81B5DB15500194FDE /* Base */,
+				8875EAC51B7109FF000AE935 /* fr */,
+				8875EAC81B710A08000AE935 /* es */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -392,6 +468,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				889DB6BD1B5DB15500194FDE /* Base */,
+				8875EAC61B7109FF000AE935 /* fr */,
+				8875EAC91B710A08000AE935 /* es */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";

@@ -44,6 +44,12 @@
     
     NSArray *availableCultures = jsonDict[@"AvailableCultures"];
     
+    if (self.availableCultures != nil) {
+        for (GWAreaCulture *culture in self.availableCultures) {
+            [theContext deleteObject:culture];
+        }
+    }
+    
     NSMutableOrderedSet *cultures = [NSMutableOrderedSet orderedSet];
     
     for (NSDictionary *culture in availableCultures) {

@@ -11,6 +11,7 @@
 #import "GWDataManager.h"
 #import "GWText.h"
 #import "GWCoreDataManager.h"
+#import "GWIntentionPresenter.h"
 
 @interface AppDelegate ()
 
@@ -24,7 +25,21 @@
     
     [GWCoreDataManager sharedInstance];
     
+    GWDataManager *dataMan = [[GWDataManager alloc] init];
+    [dataMan downloadTextsWithArea:@"IThinkOfYou" withIntentionId:@"016E91" withCulture:@"fr-FR" withCompletion:^(NSArray *textIds, NSError *error) {
+        
+        NSLog(@"performed block");
+        
+        GWText *text = [[dataMan fetchTexts] firstObject];
+        NSLog(@"the text is: %@", text);
+        NSLog(@"all texts are: %d", (int)[dataMan fetchTexts].count);
+        NSLog(@"all texts for intention: %d", (int)[dataMan fetchTextsForIntentionId:@"016E91"].count);
+        
+    }];
     
+    GWIntentionPresenter *presenter = [GWIntentionPresenter intentionBravo];
+    NSLog(@"Presenter label is: %@", presenter.intentionLabel);
+    /*
     GWDataManager *dataMan = [[GWDataManager alloc] init];
     [dataMan downloadTextsForIntention:@"016E91" withCompletion:^(NSArray *theTexts, NSError *error) {
         
@@ -56,7 +71,7 @@
         NSLog(@"Downloadings texts for all intentions");
         NSLog(@"All texts for intentions: %@, number of texts: %d", @[@"016E91", @"5CDCF2"], (int)[dataMan fetchTextsForIntentionIds:@[@"016E91", @"5CDCF2"]].count);
     }];
-    
+    */
     
     
     /*

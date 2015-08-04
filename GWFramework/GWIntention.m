@@ -71,6 +71,12 @@
     NSArray *labels = jsonDict[@"Labels"];
     NSMutableOrderedSet *labelSet = [NSMutableOrderedSet orderedSet];
     
+    if (self.labels != nil) {
+        for (GWIntentionLabel *label in self.labels) {
+            [theContext deleteObject:label];
+        }
+    }
+    
     for (NSDictionary *jsonDict in labels) {
         GWIntentionLabel *label = [GWIntentionLabel createGWIntentionWithDict:jsonDict withIntention:self withContext:theContext];
         [labelSet addObject:label];

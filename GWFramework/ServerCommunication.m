@@ -46,10 +46,79 @@ const NSString *apiPath = @"http://api.cvd.io/";
     return self;
 }
 
+
+#pragma mark - Image Downloading
+
+-(void)downloadImageIdsForIntentionSlug:(NSString *)theIntentionSlug withCompletion:(void (^)(NSArray *, NSError *))block {
+    [block copy];
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://gw-static.azurewebsites.net/container/files/specialoccasions/%@/default/small", theIntentionSlug]];
+    NSLog(@"the url: %@", url);
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+    
+    [request setHTTPMethod:@"GET"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    
+    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        NSMutableArray *imagePaths = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        [imagePaths removeLastObject];
+        NSLog(@"the paths: %@", imagePaths);
+        block(imagePaths, error);
+        
+    }] resume];
+}
+
+-(void)downloadImageIdsForRecipientId:(NSString *)theRecipientId withCompletion:(void (^)(NSArray *, NSError *))block {
+    [block copy];
+    
+    NSString *recipientPath = nil;
+    
+    if ([theRecipientId isEqualToString:@"9E2D23"]) {
+        recipientPath = @"sweetheart";
+    }
+    else if([theRecipientId isEqualToString:@"47B7E9"]) {
+        recipientPath = @"loveinterest";
+    }
+    else if([theRecipientId isEqualToString:@"64C63D"] || [theRecipientId isEqualToString:@"BCA601"]) {
+        recipientPath = @"parent";
+    }
+    else if([theRecipientId isEqualToString:@"87F524"] || [theRecipientId isEqualToString:@"3B9BF2"] || [theRecipientId isEqualToString:@"35AE93"] || [theRecipientId isEqualToString:@"2B4F14"]) {
+        recipientPath = @"friend";
+    }
+    else if([theRecipientId isEqualToString:@"6E7DFB"]) {
+        recipientPath = @"fbfriend";
+    }
+    else {
+        recipientPath = @"sweetheart";
+    }
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://gw-static.azurewebsites.net/container/files/cvd/%@?size=small", recipientPath]];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+    
+    [request setHTTPMethod:@"GET"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    
+    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        NSMutableArray *imagePaths = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        [imagePaths removeLastObject];
+        NSLog(@"the paths: %@", imagePaths);
+        block(imagePaths, error);
+
+        
+    }] resume];
+    
+}
+
 #pragma mark - Text Downloading
 
 
--(void)downloadTextsWithAreaName:(NSString *)theAreaName withIntentionId:(NSString *)theIntentionId withCompletion:(void (^)(NSArray *, NSError *))block {
+-(void)downloadTextsWithAreaName:(NSString *)theAreaName withIntentionId:(NSString *)theIntentionId withCulture:(NSString *)theCulture withCompletion:(void (^)(NSArray *, NSError *))block {
     [block copy];
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@/intention/%@/texts", apiPath, theAreaName, theIntentionId]];
@@ -58,80 +127,10 @@ const NSString *apiPath = @"http://api.cvd.io/";
     [request setHTTPMethod:@"GET"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:_acceptLanguage forHTTPHeaderField:@"Accept-Language"];
-    
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        
-        NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        
-        NSLog(@"texts with intention id: %@", array);
-        
-        block(array, error);
-        
-    }];
-}
-
--(void)downloadTextsWithAreaName:(NSString *)theAreaName withIntentionSlug:(NSString *)theIntentionSlug withCompletion:(void (^)(NSArray *, NSError *))block {
-    [block copy];
-    
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/texts", apiPath, _areaName, theIntentionSlug]];
-    
-    NSLog(@"url for texts with intention slug: %@", url.absoluteString);
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"GET"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:_acceptLanguage forHTTPHeaderField:@"Accept-Language"];
-    
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        
-        NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        
-        NSLog(@"texts with intention slug: %@", array);
-        
-        block(array, error);
-        
-    }];
-
-}
-
-
--(void)downloadTextsWithIntentionsIds:(NSArray *)theIntentionIds withCompletion:(void (^)(BOOL finished, NSArray *, NSError *))block {
-    [block copy];
-    
-    __block int numTextDownloads = 0;
-    int numTextDownloadsToComplete = (int)theIntentionIds.count;
-    
-    for (NSString *intentionId in theIntentionIds) {
-        
-        [self downloadTextsWithIntentionId:intentionId withCompletion:^(NSArray *texts, NSError *error) {
-           
-            numTextDownloads = numTextDownloads + 1;
-            
-            
-            
-        }];
-    }
-    
-}
-
-
--(void)downloadTextsWithIntentionId:(NSString *)theIntentionId withCompletion:(void (^)(NSArray *, NSError *))block {
-    [block copy];
-    
-    NSLog(@"download texts with id");
-    
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@/intention/%@/texts", apiPath, _areaName, theIntentionId]];
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"GET"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:_acceptLanguage forHTTPHeaderField:@"Accept-Language"];
+    [request setValue:theCulture forHTTPHeaderField:@"Accept-Language"];
     
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-       
+        
         NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         
         NSLog(@"texts with intention id: %@", array);
@@ -140,23 +139,12 @@ const NSString *apiPath = @"http://api.cvd.io/";
         
     }] resume];
     
-    /*
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        
-        NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        
-        NSLog(@"texts with intention id: %@", array);
-        
-        block(array, error);
-        
-    }];*/
-    
 }
 
--(void)downloadTextsWithIntentionSlug:(NSString *)theIntentionSlug withCompletion:(void (^)(NSArray *, NSError *))block {
+-(void)downloadTextsWithAreaName:(NSString *)theAreaName withIntentionSlug:(NSString *)theIntentionSlug withCulture:(NSString *)theCulture withCompletion:(void (^)(NSArray *, NSError *))block {
     [block copy];
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/texts", apiPath, _areaName, theIntentionSlug]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/texts", apiPath, theAreaName, theIntentionSlug]];
     
     NSLog(@"url for texts with intention slug: %@", url.absoluteString);
     
@@ -164,23 +152,24 @@ const NSString *apiPath = @"http://api.cvd.io/";
     [request setHTTPMethod:@"GET"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:_acceptLanguage forHTTPHeaderField:@"Accept-Language"];
+    [request setValue:theCulture forHTTPHeaderField:@"Accept-Language"];
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-       
+    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
         NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         
         NSLog(@"texts with intention slug: %@", array);
         
         block(array, error);
         
-    }];
+    }] resume];
     
 }
 
+
 #pragma mark - Intentions Downloading
 
--(void)downloadAllIntentions:(void (^)(NSArray *, NSError *))block {
+-(void)downloadAllIntentionsWithCulture:(NSString *)theCulture withCompletion:(void (^)(NSArray *, NSError *))block {
     [block copy];
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/intentions", apiPath]];
@@ -189,19 +178,19 @@ const NSString *apiPath = @"http://api.cvd.io/";
     [request setHTTPMethod:@"GET"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:_acceptLanguage forHTTPHeaderField:@"Accept-Language"];
+    [request setValue:theCulture forHTTPHeaderField:@"Accept-Language"];
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
        
         NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         
         NSLog(@"received all intentions: %@", array);
         
         block(array, error);
-    }];
+    }] resume];
 }
 
--(void)downloadIntentionsWithArea:(NSString *)theArea withCompletion:(void (^)(NSArray *, NSError *))block {
+-(void)downloadIntentionsWithArea:(NSString *)theArea withCulture:(NSString *)theCulture withCompletion:(void (^)(NSArray *, NSError *))block {
     [block copy];
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/intentions", apiPath, theArea]];
@@ -210,9 +199,9 @@ const NSString *apiPath = @"http://api.cvd.io/";
     [request setHTTPMethod:@"GET"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:_acceptLanguage forHTTPHeaderField:@"Accept-Language"];
+    [request setValue:theCulture forHTTPHeaderField:@"Accept-Language"];
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
        
         NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         
@@ -220,13 +209,13 @@ const NSString *apiPath = @"http://api.cvd.io/";
         
         block(array, error);
         
-    }];
+    }] resume];
     
 }
 
 #pragma mark - Area Downloading
 
--(void)downloadAllAreasWithCompletion:(void (^)(NSArray *, NSError *))block {
+-(void)downloadAllAreasWithCulture:(NSString *)theCulture withCompletion:(void (^)(NSArray *, NSError *))block {
     [block copy];
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/areas", apiPath]];
@@ -235,9 +224,9 @@ const NSString *apiPath = @"http://api.cvd.io/";
     [request setHTTPMethod:@"GET"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:_acceptLanguage forHTTPHeaderField:@"Accept-Language"];
+    [request setValue:theCulture forHTTPHeaderField:@"Accept-Language"];
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         
@@ -245,10 +234,10 @@ const NSString *apiPath = @"http://api.cvd.io/";
         
         block(array, error);
         
-    }];
+    }] resume];
 }
 
--(void)downloadArea:(NSString *)theAreaName withCompletion:(void (^)(NSArray *, NSError *))block {
+-(void)downloadArea:(NSString *)theAreaName withCulture:(NSString *)theCulture withCompletion:(void (^)(NSArray *, NSError *))block {
     [block copy];
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", apiPath, theAreaName]];
@@ -257,9 +246,9 @@ const NSString *apiPath = @"http://api.cvd.io/";
     [request setHTTPMethod:@"GET"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:_acceptLanguage forHTTPHeaderField:@"Accept-Language"];
+    [request setValue:theCulture forHTTPHeaderField:@"Accept-Language"];
     
-    [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
        
         NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         
@@ -267,7 +256,7 @@ const NSString *apiPath = @"http://api.cvd.io/";
         
         block(array, error);
         
-    }];
+    }] resume];
     
 }
 

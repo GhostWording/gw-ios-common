@@ -53,10 +53,12 @@
 +(instancetype)createGWTextWithDict:(NSDictionary *)jsonDict withContext:(NSManagedObjectContext*)theContext {
     GWText *text = [GWText createGWTextWithContext:theContext];
     [text updateTextWithDict:jsonDict withContext:theContext];
-    NSLog(@"text content is: %@", text.content);
+    //NSLog(@"text content is: %@", text.content);
     
     return text;
 }
+
+// MARK: when updating stop creating new tag objects
 
 -(void)updateTextWithDict:(NSDictionary *)jsonDict withContext:(NSManagedObjectContext *)theContext {
     
@@ -97,6 +99,12 @@
     
     NSArray *tags = jsonDict[@"TagIds"];
     NSMutableOrderedSet *mutableSet = [[NSMutableOrderedSet alloc] init];
+    
+    if (self.tagIds != nil) {
+        for (GWTag *tag in self.tagIds) {
+            [theContext deleteObject:tag];
+        }
+    }
     
     for (NSString *tagId in tags) {
         GWTag *tag = [GWTag createGWTagWithId:tagId andText:self withContext:theContext];

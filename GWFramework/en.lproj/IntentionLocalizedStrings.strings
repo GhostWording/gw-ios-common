@@ -1,0 +1,15 @@
+/* 
+  IntentionLocalizedStrings.strings
+  GWFramework
+
+  Created by Mathieu Skulason on 04/08/15.
+  Copyright (c) 2015 Mathieu Skulason. All rights reserved.
+*/
+"<IntentionBravo>" = "Bravo";
+"<IntentionIThinkOfYou>" = "I think of you";
+"<IntentionGoodMorning>" = "Good morning";
+"<intentionIAmHereForYou>" = "I am here for you";
+"<IntentionJokes>" = "Jokes";
+"<IntentionGetHomeSafe>" = "Get home safe";
+"<IntentionHumorousInsults>" = "Humorous insults";
+"<IntentionThankYouForTheInvitation>" = "Thank you for the invitation";

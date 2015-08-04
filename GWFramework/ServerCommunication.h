@@ -16,24 +16,23 @@
 @property (nonatomic, strong) NSString *areaName;
 @property (nonatomic, strong) NSString *acceptLanguage;
 
--(void)downloadTextsWithAreaName:(NSString*)theAreaName withIntentionId:(NSString*)theIntentionId withCompletion:(void (^)(NSArray *theTexts, NSError *error))block;
--(void)downloadTextsWithAreaName:(NSString *)theAreaName withIntentionSlug:(NSString *)theIntentionSlug withCompletion:(void (^)(NSArray *, NSError *))block;
+// MARK: Image download
+-(void)downloadImageIdsForIntentionSlug:(NSString*)theIntentionSlug withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;
+-(void)downloadImageIdsForRecipientId:(NSString*)theRecipientId withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;
 
-// Text Downloads
--(void)downloadTextsWithIntentionsIds:(NSArray*)theIntentionIds withCompletion:(void (^)(BOOL finished, NSArray *theTexts, NSError *error))block;
--(void)downloadTextsWithIntentionSlugs:(NSArray*)theIntnetionSlugs withCompletion:(void (^)(BOOL finished, NSArray *theTexts, NSError *error))block;
--(void)downloadTextsWithIntentionId:(NSString*)theIntentionId withCompletion:(void (^)(NSArray *theTexts, NSError *error))block;
--(void)downloadTextsWithIntentionSlug:(NSString*)theIntentionSlug withCompletion:(void (^)(NSArray *theTexts, NSError *error))block;
+// MARK: Text Downloads
+-(void)downloadTextsWithAreaName:(NSString*)theAreaName withIntentionId:(NSString*)theIntentionId withCulture:(NSString*)theCulture withCompletion:(void (^)(NSArray *theTexts, NSError *error))block;
+-(void)downloadTextsWithAreaName:(NSString *)theAreaName withIntentionSlug:(NSString *)theIntentionSlug withCulture:(NSString*)theCulture withCompletion:(void (^)(NSArray *, NSError *))block;
 
-// Intention downloads
+// MARK: Intention downloads
 
 /* Currently not supported as the data is not fully constructed **/
--(void)downloadAllIntentions:(void (^)(NSArray *intentions, NSError *error))block;
--(void)downloadIntentionsWithArea:(NSString*)theArea withCompletion:(void (^)(NSArray *intentions, NSError *error))block;
+-(void)downloadAllIntentionsWithCulture:(NSString*)theCulture withCompletion:(void (^)(NSArray *intentions, NSError *error))block;
+-(void)downloadIntentionsWithArea:(NSString*)theArea withCulture:(NSString*)theCulture withCompletion:(void (^)(NSArray *intentions, NSError *error))block;
 
-// Area Downloads
+// MARK: Area Downloads
 
--(void)downloadAllAreasWithCompletion:(void (^)(NSArray *theAreas, NSError *error))block;
--(void)downloadArea:(NSString*)theAreaName withCompletion:(void (^)(NSArray *intentions, NSError *error))block;
+-(void)downloadAllAreasWithCulture:(NSString*)theCulture withCompletion:(void (^)(NSArray *theAreas, NSError *error))block;
+-(void)downloadArea:(NSString*)theAreaName withCulture:(NSString*)theCulture withCompletion:(void (^)(NSArray *intentions, NSError *error))block;
 
 @end

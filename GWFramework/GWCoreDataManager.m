@@ -14,6 +14,7 @@
 
 @end
 
+
 @implementation GWCoreDataManager
 
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
@@ -33,9 +34,6 @@
 -(id)init {
     if (self = [super init]) {
         dateFormatter = [[NSDateFormatter alloc] init];
-        
-        _childManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
-        _childManagedObjectContext.parentContext = self.mainObjectContext;
     }
     
     return self;
