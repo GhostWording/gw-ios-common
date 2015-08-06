@@ -41,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		880524CB1B73CEDD00A5F869 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/IntentionLocalizedStrings.strings; sourceTree = "<group>"; };
 		884746D41B62E37200F37627 /* GWDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWDataManager.h; sourceTree = "<group>"; };
 		884746D51B62E37200F37627 /* GWDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWDataManager.m; sourceTree = "<group>"; };
 		8875EAB71B6FBA81000AE935 /* GWIntentionPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWIntentionPresenter.h; sourceTree = "<group>"; };
@@ -450,6 +451,7 @@
 				8875EAC41B7109AD000AE935 /* en */,
 				8875EAC71B7109FF000AE935 /* fr */,
 				8875EACA1B710A08000AE935 /* es */,
+				880524CB1B73CEDD00A5F869 /* Base */,
 			);
 			name = IntentionLocalizedStrings.strings;
 			sourceTree = "<group>";

@@ -30,11 +30,9 @@
 +(instancetype)intentionJokes;
 +(instancetype)intentionIAmLate;
 +(instancetype)intentionThankYou;
-+(instancetype)intentionWantToGoForDrinks;
 +(instancetype)intentionComeOverForDinner;
 +(instancetype)intentionIAmHereForYou;
 +(instancetype)intentionIAmSorry;
-+(instancetype)intentionWhatIsNew;
 +(instancetype)intentionHappyNewYear;
 +(instancetype)intentionGoodNight;
 +(instancetype)intentionSurpriseMe;
@@ -69,11 +67,13 @@
 +(instancetype)intentionThankYouForTheMeeting;
 +(instancetype)intentionRoutineIsLurking;
 +(instancetype)intentionLetMeIntroduceMyself;
++(instancetype)intentionIAmLeavingYou;
 +(instancetype)intentionIAmJealous;
 +(instancetype)intentionCelebrateTheOccasion;
 +(instancetype)intentionLetUsStayInTouch;
 +(instancetype)intentionThankYouFortheGift;
 +(instancetype)intentionGiveMeSomeNews;
++(instancetype)intentionWhatIsUpWithYouLately;
 +(instancetype)intentionMerryChristmas;
 +(instancetype)intentionSalutationClosingFormula;
 

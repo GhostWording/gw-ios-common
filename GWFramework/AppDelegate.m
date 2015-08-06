@@ -37,6 +37,13 @@
         
     }];
     
+    [dataMan downloadIntentionsWithArea:@"IThinkOfYou" withCulture:@"" withCompletion:^(NSArray *intentionIds, NSError *error) {
+       
+        NSLog(@"All intentions are: %d", (int)[dataMan fetchIntentions].count);
+        NSLog(@"all intentions are: %@", [dataMan fetchIntentions]);
+        
+    }];
+    
     GWIntentionPresenter *presenter = [GWIntentionPresenter intentionBravo];
     NSLog(@"Presenter label is: %@", presenter.intentionLabel);
     /*
