@@ -15,6 +15,7 @@
 #import "GWIntention.h"
 #import "GWText.h"
 #import "GWTag.h"
+#import "GWImage.h"
 
 @interface GWDataManager () {
     ServerCommunication *serverComm;
@@ -54,7 +55,7 @@
 }
 
 -(NSArray*)fetchIntentionsWithCulture:(NSString *)theCulture {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"culture like[c] '%@'", theCulture];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"culture like[c] '%@'", theCulture]];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWIntention"];
     [request setPredicate:predicate];
     
@@ -73,7 +74,7 @@
 }
 
 -(NSArray*)fetchTextsForCulture:(NSString *)theCulture {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"culture like[c] '%@'", theCulture];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"culture like[c] '%@'", theCulture]];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWText"];
     [request setPredicate:predicate];
     
@@ -94,7 +95,8 @@
 }
 
 -(NSArray*)fetchTextsForIntentionId:(NSString *)theIntentionId withCulture:(NSString *)theCulture {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"intentionId like[c] '%@' AND culture like[c] '%@'", theIntentionId, theCulture];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"intentionId like[c] '%@' AND culture like[c] '%@'", theIntentionId, theCulture]];
+    NSLog(@"predicate for intention id and culture is: %@", predicate);
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWText"];
     [request setPredicate:predicate];
     
@@ -114,7 +116,8 @@
 }
 
 -(NSArray*)fetchTextsForIntentionIds:(NSArray *)theIntentionIds withCulture:(NSString *)theCulture {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"intentionId IN %@ and culture like[c] '%@'", theIntentionIds, theCulture];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"intentionId IN %@ and culture like[c] %@", theIntentionIds, theCulture];
+    NSLog(@"predicate is: %@", predicate);
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWText"];
     [request setPredicate:predicate];
     
@@ -134,7 +137,7 @@
 }
 
 -(NSArray*)fetchTextsForIntentionSlug:(NSString *)theIntentionSlug withCulture:(NSString *)theCulture {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"intentionLabel like[c] '%@' AND culture like[c] '%@'", theIntentionSlug, theCulture];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"intentionLabel like[c] '%@' AND culture like[c] '%@'", theIntentionSlug, theCulture]];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWText"];
     [request setPredicate:predicate];
     
@@ -154,7 +157,7 @@
 }
 
 -(NSArray*)fetchTextsForIntentionSlugs:(NSArray *)theIntentionSlugs withCulture:(NSString *)theCulture {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"intentionLabel IN %@ AND culture like[c] '%@'", theIntentionSlugs, theCulture];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"intentionLabel IN %@ AND culture like[c] %@", theIntentionSlugs, theCulture];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWText"];
     [request setPredicate:predicate];
     
@@ -174,7 +177,7 @@
 }
 
 -(NSArray*)fetchTextsForIntentionId:(NSString *)theIntentionId andRecipientType:(NSString *)recipientTypeTag withCulture:(NSString *)theCulture {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"intentionId like[c] '%@' AND '%@' IN tagIds AND culture like[c] '%@'", theIntentionId, recipientTypeTag, theCulture];;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"intentionId like[c] '%@' AND '%@' IN tagIds AND culture like[c] '%@'", theIntentionId, recipientTypeTag, theCulture]];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWText"];
     [request setPredicate:predicate];
     
@@ -184,7 +187,7 @@
 }
 
 -(NSArray*)fetchTextsForIntentionSlug:(NSString *)theIntentionSlug andRecipientType:(NSString *)recipientTypeTag {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"intentionLabel like[c] '%@' AND '%@' IN tagIds", theIntentionSlug, recipientTypeTag];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"intentionLabel like[c] '%@' AND '%@' IN tagIds", theIntentionSlug, recipientTypeTag]];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWText"];
     [request setPredicate:predicate];
     
@@ -195,7 +198,7 @@
 
 
 -(NSArray*)fetchTextsForIntentionSlug:(NSString *)theIntentionSlug andRecipientType:(NSString *)recipientTypeTag withCulture:(NSString *)theCulture {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"intentionLabel like[c] '%@' AND '%@' IN tagIds AND culture like[c] '%@'", theIntentionSlug, recipientTypeTag, theCulture];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"intentionLabel like[c] '%@' AND '%@' IN tagIds AND culture like[c] '%@'", theIntentionSlug, recipientTypeTag, theCulture]];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWText"];
     [request setPredicate:predicate];
     
@@ -225,6 +228,85 @@
     return theTags;
 }
 
+// MARK: Image methods
+
+-(NSArray*)randomIndexesFromArray:(NSArray*)theArray withNumRandomIndexes:(NSInteger)numRandomIndexes {
+    
+    if (numRandomIndexes >= theArray.count) {
+        return theArray;
+    }
+    
+    NSMutableArray *allRandomImages = [NSMutableArray arrayWithArray:theArray];
+    NSMutableArray *randomImages = [NSMutableArray array];
+    
+    while (randomImages.count != numRandomIndexes) {
+        int position = arc4random_uniform((int)allRandomImages.count);
+        [randomImages addObject:[allRandomImages objectAtIndex:position]];
+        [allRandomImages removeObjectAtIndex:position];
+    }
+    
+    return randomImages;
+}
+
+-(NSArray*)fetchRandomImagesWithNum:(int)numImages {
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWImage"];
+    
+    NSMutableArray *theImagesToReturn = [NSMutableArray array];
+    
+    NSArray *theImages = [[[GWCoreDataManager sharedInstance] mainObjectContext] executeFetchRequest:request error:nil];
+    NSMutableArray *allMutableImages = [NSMutableArray arrayWithArray:theImages];
+    
+    int imagesFound = 0;
+    
+    while (imagesFound != numImages) {
+        int randPos = arc4random_uniform((int)allMutableImages.count);
+        [theImagesToReturn addObject:[allMutableImages objectAtIndex:randPos]];
+        [allMutableImages removeObjectAtIndex:randPos];
+        imagesFound = imagesFound + 1;
+    }
+    
+    return allMutableImages;
+}
+
+-(NSArray*)fetchImages {
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWImage"];
+    
+    NSArray *theImages = [[[GWCoreDataManager sharedInstance] mainObjectContext] executeFetchRequest:request error:nil];
+    
+    return theImages;
+    
+}
+
+-(NSArray*)fetchRandomImagesOnBackgroundThreadWithNum:(int)numImages {
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWImage"];
+    
+    NSMutableArray *theImagesToReturn = [NSMutableArray array];
+    
+    NSArray *theImages = [[[GWCoreDataManager sharedInstance] childContext] executeFetchRequest:request error:nil];
+    NSMutableArray *allMutableImages = [NSMutableArray arrayWithArray:theImages];
+    
+    int imagesFound = 0;
+    
+    while (imagesFound != numImages) {
+        int randPos = arc4random_uniform((int)allMutableImages.count);
+        [theImagesToReturn addObject:[allMutableImages objectAtIndex:randPos]];
+        [allMutableImages removeObjectAtIndex:randPos];
+        imagesFound = imagesFound + 1;
+    }
+    
+    return allMutableImages;
+}
+
+-(NSArray*)fetchImagesOnBackgroundThread {
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWImage"];
+    
+    NSArray *theImages = [[[GWCoreDataManager sharedInstance] childContext] executeFetchRequest:request error:nil];
+    
+    return theImages;
+}
+
 
 #pragma mark - Local Data Store Background Thread
 
@@ -247,7 +329,8 @@
 }
 
 -(NSArray*)fetchIntentionsOnBackgroundThreadWithCulture:(NSString *)theCulture {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"culture like[c] '%@'", theCulture];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"culture like[c] '%@'", theCulture]];
+    NSLog(@"predicate is: %@", predicate);
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWIntention"];
     [request setPredicate:predicate];
     
@@ -267,7 +350,7 @@
 }
 
 -(NSArray*)fetchTextsOnBackgroundThreadForCulture:(NSString *)theCulture {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"culture like[c] '%@'", theCulture];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"culture like[c] '%@'", theCulture]];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWText"];
     [request setPredicate:predicate];
     
@@ -277,7 +360,7 @@
 }
 
 -(NSArray*)fetchTextsOnBackgroundThreadForIntentionId:(NSString *)theIntentionID withCulture:(NSString *)theCulture {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"intentionId like[c] '%@' AND culture like[c] '%@'", theIntentionID, theCulture];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"intentionId like[c] '%@' AND culture like[c] '%@'", theIntentionID, theCulture]];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWText"];
     [request setPredicate:predicate];
     
@@ -287,7 +370,7 @@
 }
 
 -(NSArray*)fetchTextsOnBackgroundThreadForIntentionId:(NSString *)theIntentionID withRecipientType:(NSString *)recipientTypeTag withCulture:(NSString *)theCulture {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"intentionId like[c] '%@' AND '%@' IN tagIds AND culture like[c] '%@'", theIntentionID, recipientTypeTag, theCulture];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"intentionId like[c] '%@' AND '%@' IN tagIds AND culture like[c] '%@'", theIntentionID, recipientTypeTag, theCulture]];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWText"];
     [request setPredicate:predicate];
     
@@ -297,7 +380,7 @@
 }
 
 -(NSArray*)fetchTextsOnBackgroundThreadForIntentionSlug:(NSString *)theIntentionSlug withCulture:(NSString *)theCulture {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"intentionLabel like[c] '%@' AND culture like[c] '%@'", theIntentionSlug, theCulture];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"intentionLabel like[c] '%@' AND culture like[c] '%@'", theIntentionSlug, theCulture]];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWText"];
     [request setPredicate:predicate];
     
@@ -307,7 +390,7 @@
 }
 
 -(NSArray*)fetchTextsOnBackgroundThreadForIntentionSlug:(NSString *)theIntentionSlug withRecipientType:(NSString *)recipientTypeTag withCulture:(NSString *)theCulture {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"intentionLabel like[c] '%@' AND '%@' in tagIds AND culture like[c] '%@'", theIntentionSlug, recipientTypeTag, theCulture];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"intentionLabel like[c] '%@' AND '%@' in tagIds AND culture like[c] '%@'", theIntentionSlug, recipientTypeTag, theCulture]];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWText"];
     [request setPredicate:predicate];
     
@@ -319,17 +402,7 @@
 
 #pragma mark - Local Data Store Helper Methods
 
--(BOOL)textExistsWithId:(NSString *)theTextId inArray:(NSArray *)theArray {
-    
-    for (GWText *theText in theArray) {
-        if ([theText.textId isEqualToString:theTextId]) {
-            return YES;
-        }
-    }
-    
-    return NO;
-    
-}
+// MARK: Search methods
 
 -(GWText*)textWithId:(NSString *)theTextId inArray:(NSArray *)theArray {
     for (GWText *theText in theArray) {
@@ -341,17 +414,6 @@
     }
     
     return nil;
-}
-
--(BOOL)tagExistsWithId:(NSString *)theTagId inArray:(NSArray *)theArray {
-    
-    for (GWTag *tag in theArray) {
-        if ([tag.tagId isEqualToString:theTagId]) {
-            return YES;
-        }
-    }
-    
-    return NO;
 }
 
 -(GWTag*)tagWithId:(NSString *)theTagId inArray:(NSArray *)theArray {
@@ -387,6 +449,63 @@
     return nil;
 }
 
+-(GWImage*)imageWithId:(NSString *)theImageId inArray:(NSArray *)theArray {
+    
+    for (GWImage *theImage in theArray) {
+        if ([theImage.imageId isEqualToString:theImageId]) {
+            return theImage;
+        }
+    }
+    
+    return nil;
+}
+
+// MARK: data manipulation methods
+
+-(NSArray*)removeImagePathsInArray:(NSArray*)theImagePaths withImagePathsToRemove:(NSArray*)theImagePathsToRemove {
+    
+    NSMutableArray *imagePathsToReturn = [NSMutableArray arrayWithArray:theImagePaths];
+    
+    for (NSString *imagePathToRemove in theImagePathsToRemove) {
+        
+        for (int i = 0; i < imagePathsToReturn.count; i++) {
+            
+            NSString *theImagePath = [imagePathsToReturn objectAtIndex:i];
+            
+            if ([imagePathToRemove isEqualToString:theImagePath]) {
+                [imagePathsToReturn removeObject:theImagePath];
+                --i;
+            }
+        }
+        
+    }
+    
+    return imagePathsToReturn;
+}
+
+-(NSArray *)removeImagePathsInArray:(NSArray*)theImagePaths withImagesToRemove:(NSArray*)theImagesToRemove {
+    
+    NSMutableArray *imagePathsToReturn = [NSMutableArray arrayWithArray:theImagePaths];
+    
+    for (GWImage *theImage in theImagesToRemove) {
+        
+        for (int i = 0; i < imagePathsToReturn.count; i++) {
+            
+            NSString *theImagePath = [imagePathsToReturn objectAtIndex:i];
+            
+            if ([theImage.imageId isEqualToString:theImagePath]) {
+                [imagePathsToReturn removeObject:theImagePath];
+                --i;
+            }
+        }
+        
+    }
+    
+    return imagePathsToReturn;
+    
+}
+
+// MARK: persist and update methods
 
 -(GWText*)persistTextOrUpdateWithJson:(NSDictionary*)textJson withArray:(NSArray*)theArray withContext:(NSManagedObjectContext*)theContext {
     
@@ -438,7 +557,141 @@
     return theArea;
 }
 
+-(GWImage*)persistImageIfNotExistWithImageId:(NSString*)theImageId withImageData:(NSData*)theImageData withImageIds:(NSArray*)theImageIds withContext:(NSManagedObjectContext*)theContext {
+    
+    GWImage *theImage = [self imageWithId:theImageId inArray:theImageIds];
+    
+    if (theImage == nil) {
+        theImage = [GWImage createGWImageWithImagePath:theImageId withImageData:theImageData withManagedContext:theContext];
+    }
+    
+    return theImage;
+    
+}
+
 #pragma mark - Server Comm
+
+
+-(void)downloadImagesAndPersistWithIntentionSlug:(NSString *)theIntentionSlug withNumImagesToDownload:(NSInteger)theNumImages withCompletion:(void (^)(NSArray *, NSError *))block {
+    [block copy];
+    
+    [serverComm downloadImageIdsForIntentionSlug:theIntentionSlug withCompletion:^(NSArray *theImageIds, NSError *error) {
+       
+        GWDataManager *newDataMan = [[GWDataManager alloc] init];
+        
+        NSLog(@"all image paths downloaded: %d", (int)theImageIds.count);
+        
+        // fetch all the images in the datastore
+        NSArray *allImages = [newDataMan fetchImagesOnBackgroundThread];
+        NSLog(@"all images to persist are: %d", (int)allImages.count);
+        // remove the images that we have in the datastore from the paths sent from the array
+        NSArray *imagePathsLeft = [newDataMan removeImagePathsInArray:theImageIds withImagesToRemove:allImages];
+        NSLog(@"the image paths left: %d", (int)imagePathsLeft.count);;
+        // get random image paths from those left based on the num images to download
+        NSArray *randomImagePaths = [newDataMan randomIndexesFromArray:imagePathsLeft withNumRandomIndexes:theNumImages];
+        NSLog(@"num random images: %d with imagePaths: %@", (int)randomImagePaths.count, randomImagePaths);
+        
+        [newDataMan downloadImagesWithUrls:randomImagePaths withCompletion:^(NSArray *theImagePaths, NSError *error) {
+            
+            block(theImagePaths, error);
+            
+        }];
+        
+    }];
+    
+}
+
+-(void)downloadImagesAndPersistWithRecipientId:(NSString *)theRecipientId withNumImagesToDownload:(NSInteger)theNumImages withCompletion:(void (^)(NSArray *, NSError *))block {
+    [block copy];
+    
+    [serverComm downloadImageIdsForRecipientId:theRecipientId withCompletion:^(NSArray *theImageIds, NSError *error) {
+       
+        GWDataManager *newDataMan = [[GWDataManager alloc] init];
+        
+        // fetch all the image in the datastore
+        NSArray *allImages = [newDataMan fetchImagesOnBackgroundThread];
+        // remove the images that we have in the datastore from the paths sent form the array
+        NSArray *imagePathsLeft = [newDataMan removeImagePathsInArray:theImageIds withImagesToRemove:allImages];
+        // get random image paths from those left based on the num images to download
+        NSArray *randomImagePaths = [newDataMan randomIndexesFromArray:imagePathsLeft withNumRandomIndexes:theNumImages];
+        
+        [newDataMan downloadImagesWithUrls:randomImagePaths withCompletion:^(NSArray *theImagePaths, NSError *error) {
+           
+            block(theImagePaths, error);
+            
+        }];
+        
+    }];
+}
+
+-(void)downloadImagePathsWithIntentionSlug:(NSString *)theIntentionSlug withCompletion:(void (^)(NSArray *, NSError *))block {
+    [block copy];
+    
+    [serverComm downloadImageIdsForIntentionSlug:theIntentionSlug withCompletion:^(NSArray *theIntentionSlugs, NSError *error) {
+       
+        block(theIntentionSlugs, error);
+    }];
+}
+
+-(void)downloadImagePathsWithRecipientId:(NSString *)theRecipientId withCompletion:(void (^)(NSArray *, NSError *))block {
+    [block copy];
+    
+    [serverComm downloadImageIdsForRecipientId:theRecipientId withCompletion:^(NSArray *theImagePaths, NSError *error) {
+       
+        block(theImagePaths, error);
+        
+    }];
+}
+
+-(void)downloadImagesWithUrls:(NSArray *)theImageUrls withCompletion:(void (^)(NSArray *, NSError *))block {
+    [block copy];
+    
+    NSMutableArray *theImages = [NSMutableArray array];
+    int allImagesCount = (int)theImageUrls.count;
+    __block int numImages = 0;
+    
+    for (NSString *theImagePath in theImageUrls) {
+        
+        [self downloadImageWithUrl:theImagePath withCompletion:^(NSString *theImageId, NSError *error) {
+            NSLog(@"dowloaded image with url: %@", theImagePath);
+            if (theImageId != nil) {
+                [theImages addObject:theImageId];
+            }
+            
+            numImages = numImages + 1;
+                        
+            if (numImages == allImagesCount) {
+                NSLog(@"all images to download: %d, num images downloaded: %d", numImages, allImagesCount);
+                block(theImages, nil);
+            }
+            
+        }];
+        
+    }
+    
+}
+
+-(void)downloadImageWithUrl:(NSString*)theImageUrl withCompletion:(void (^)(NSString *imageId, NSError *error))block {
+    [block copy];
+    
+    NSManagedObjectContext *childContext = [[GWCoreDataManager sharedInstance] childContext];
+    
+    NSData *theData = [serverComm downloadImageWithImagePath:theImageUrl];
+    
+    if (theData == nil) {
+        block(nil, [NSError errorWithDomain:@"api.cvd.io" code:1000 userInfo:@{NSLocalizedDescriptionKey : @"No image found"}]);
+    }
+    else {
+        GWImage *theImage = [GWImage createGWImageWithImagePath:theImageUrl withImageData:theData withManagedContext:childContext];
+        
+        [childContext save:nil];
+        
+        [[[GWCoreDataManager sharedInstance] mainObjectContext] save:nil];
+        
+        block(theImage.imageId, nil);
+    }
+  
+}
 
 #pragma mark - Text downloads
 
@@ -485,7 +738,7 @@
         NSMutableArray *textToReturn;
         NSManagedObjectContext *childContext = [[GWCoreDataManager sharedInstance] childContext];
         GWDataManager *dataMan = [[GWDataManager alloc] init];
-        NSArray *textsForIntention = [dataMan fetchTextsOnBackgroundThread];
+        NSArray *textsForIntention = [dataMan fetchTextsOnBackgroundThreadForIntentionId:intentionId withCulture:theCulture];
         NSLog(@"Texts for intention: %@", textsForIntention);
         
         for (NSDictionary *textJson in theTexts) {
@@ -591,6 +844,9 @@
         NSManagedObjectContext *childContext = [[GWCoreDataManager sharedInstance] childContext];
         GWDataManager *dataMan = [[GWDataManager alloc] init];
         NSArray *intentionsForCulture = [dataMan fetchIntentionsOnBackgroundThreadWithCulture:theCulture];
+        NSArray *allIntentions = [dataMan fetchIntentionsOnBackgroundThread];
+        NSLog(@"intentions for culture: %d", (int)intentionsForCulture.count);
+        NSLog(@"all intentions for culture: %d", (int)allIntentions.count);
         
         for (NSDictionary *jsonDict in intentions) {
             GWIntention *intention = [dataMan persistIntentionOrUpdateWithJson:jsonDict withArray:intentionsForCulture withContext:childContext];

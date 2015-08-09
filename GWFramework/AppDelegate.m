@@ -31,17 +31,46 @@
         NSLog(@"performed block");
         
         GWText *text = [[dataMan fetchTexts] firstObject];
-        NSLog(@"the text is: %@", text);
+        //NSLog(@"the text is: %@", text);
         NSLog(@"all texts are: %d", (int)[dataMan fetchTexts].count);
         NSLog(@"all texts for intention: %d", (int)[dataMan fetchTextsForIntentionId:@"016E91"].count);
+        NSLog(@"all texts for intention and culture: %d", (int)[dataMan fetchTextsForIntentionId:@"016E91" withCulture:@"fr-FR"].count);
+        NSLog(@"all tets for multiple intentino ids: %d", (int)[dataMan fetchTextsForIntentionIds:@[@"016E91", [GWIntentionPresenter intentionRoutineIsLurking].intentionId]].count);
+        NSLog(@"all texts for multiple intention ids and culture: %d", (int)[dataMan fetchTextsForIntentionIds:@[@"016E91", [GWIntentionPresenter intentionRoutineIsLurking].intentionId] withCulture:@"fr-FR"].count);
         
     }];
     
-    [dataMan downloadIntentionsWithArea:@"IThinkOfYou" withCulture:@"" withCompletion:^(NSArray *intentionIds, NSError *error) {
+    [dataMan downloadIntentionsWithArea:@"IThinkOfYou" withCulture:@"fr-FR" withCompletion:^(NSArray *intentionIds, NSError *error) {
        
         NSLog(@"All intentions are: %d", (int)[dataMan fetchIntentions].count);
-        NSLog(@"all intentions are: %@", [dataMan fetchIntentions]);
+        NSLog(@"all intentions for culture are: %d", (int)[dataMan fetchIntentionsWithCulture:@"fr-FR"].count);
         
+    }];
+    
+    [dataMan downloadImagePathsWithIntentionSlug:[GWIntentionPresenter intentionILikeYou].intentionSlugPrototypeLink withCompletion:^(NSArray *imagePaths, NSError *error){
+        NSLog(@"image paths for intention slug are: %d", (int)imagePaths.count);
+    }];
+    
+    [dataMan downloadImagePathsWithRecipientId:@"9E2D23" withCompletion:^(NSArray *imagePaths, NSError *error) {
+        NSLog(@"image paths for recipient are: %d", (int)imagePaths.count);
+    }];
+    
+    /*
+    [dataMan downloadImagePathsWithIntentionSlug:[GWIntentionPresenter intentionILikeYou].intentionSlugPrototypeLink withCompletion:^(NSArray *theImagePaths, NSError *error) {
+        GWDataManager *newDataMan = [[GWDataManager alloc] init];
+        [newDataMan downloadImagesWithUrls:theImagePaths withCompletion:^(NSArray *theImages, NSError *error) {
+            GWDataManager *anotherDataMan = [[GWDataManager alloc] init];
+            NSLog(@"downloaded images are: %d", (int)theImages.count);
+            NSLog(@"fetched images are: %d", (int)[anotherDataMan fetchImagesOnBackgroundThread].count);
+            NSLog(@"images are: %@", [anotherDataMan fetchImagesOnBackgroundThread]);
+            
+        }];
+    }];*/
+    
+    [dataMan downloadImagesAndPersistWithIntentionSlug:[GWIntentionPresenter intentionILoveYou].intentionSlugPrototypeLink withNumImagesToDownload:10 withCompletion:^(NSArray *theImagePaths, NSError *error) {
+        NSLog(@"the image paths downloaded: %@", theImagePaths);
+        GWDataManager *theDataMan = [[GWDataManager alloc] init];
+        NSLog(@"all images downloaded: %@", [theDataMan fetchImagesOnBackgroundThread] );
     }];
     
     GWIntentionPresenter *presenter = [GWIntentionPresenter intentionBravo];

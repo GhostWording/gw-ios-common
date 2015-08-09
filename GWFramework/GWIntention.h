@@ -29,8 +29,8 @@
 @property (nonatomic, retain) NSDate * mostRecentTextUpdate;
 @property (nonatomic, retain) NSNumber * mostRecentTextUpdateEpoch;
 @property (nonatomic, retain) NSNumber * weightingCoefficient;
-@property (nonatomic, retain) NSNumber * recurring;
-@property (nonatomic, retain) NSNumber * impersonal;
+@property (nonatomic, retain) NSString * recurring;
+@property (nonatomic, retain) NSString * impersonal;
 @property (nonatomic, retain) NSOrderedSet *labels;
 
 +(instancetype)createGWIntention;

@@ -19,6 +19,7 @@
 // MARK: Image download
 -(void)downloadImageIdsForIntentionSlug:(NSString*)theIntentionSlug withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;
 -(void)downloadImageIdsForRecipientId:(NSString*)theRecipientId withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;
+-(NSData*)downloadImageWithImagePath:(NSString*)theImagePath;
 
 // MARK: Text Downloads
 -(void)downloadTextsWithAreaName:(NSString*)theAreaName withIntentionId:(NSString*)theIntentionId withCulture:(NSString*)theCulture withCompletion:(void (^)(NSArray *theTexts, NSError *error))block;

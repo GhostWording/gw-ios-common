@@ -7,14 +7,32 @@
 //
 
 #import "GWImage.h"
+#import "GWCoreDataManager.h"
 
 
 @implementation GWImage
 
 @dynamic imageData;
-@dynamic imagePath;
-@dynamic application;
 @dynamic imageId;
-@dynamic theme;
+
++(GWImage*)createGWImage {
+    GWImage *theImage = [NSEntityDescription insertNewObjectForEntityForName:@"GWImage" inManagedObjectContext:[[GWCoreDataManager sharedInstance] mainObjectContext]];
+    return theImage;
+}
+
++(GWImage*)createGWImageWithImagePath:(NSString *)theImagePath withImageData:(NSData *)theImageData withManagedContext:(NSManagedObjectContext *)theContext {
+    GWImage *theImage = [NSEntityDescription insertNewObjectForEntityForName:@"GWImage" inManagedObjectContext:theContext];
+    [theImage updateImageWithImagePath:theImagePath withImageData:theImageData];
+    return theImage;
+}
+
+-(void)updateImageWithImagePath:(NSString *)theImagePath withImageData:(NSData *)theImageData {
+    self.imageData = theImageData;
+    self.imageId = theImagePath;
+}
+
+-(NSString*)description {
+    return [NSString stringWithFormat:@"GWImage imageId: %@", self.imageId];
+}
 
 @end

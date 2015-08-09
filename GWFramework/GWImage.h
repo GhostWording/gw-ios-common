@@ -13,9 +13,9 @@
 @interface GWImage : NSManagedObject
 
 @property (nonatomic, retain) NSData * imageData;
-@property (nonatomic, retain) NSString * imagePath;
-@property (nonatomic, retain) NSString * application;
 @property (nonatomic, retain) NSString * imageId;
-@property (nonatomic, retain) NSString * theme;
 
++(GWImage*)createGWImage;
++(GWImage*)createGWImageWithImagePath:(NSString*)theImagePath withImageData:(NSData*)theImageData withManagedContext:(NSManagedObjectContext*)theContext;
+-(void)updateImageWithImagePath:(NSString*)theImagePath withImageData:(NSData*)theImageData;
 @end

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class GWText, GWTag, GWArea, GWIntention;
+@class GWText, GWTag, GWArea, GWIntention, GWImage;
 
 /*
         Look into a different design for managed object contexts
@@ -91,6 +91,11 @@
 /* Fetch texts on background thread for the given intention slug, recipient tag and culture **/
 -(NSArray*)fetchTextsOnBackgroundThreadForIntentionSlug:(NSString *)theIntentionSlug withRecipientType:(NSString*)recipientTypeTag withCulture:(NSString *)theCulture;
 
+-(NSArray*)fetchRandomImagesWithNum:(int)numImages;
+-(NSArray*)fetchImages;
+-(NSArray*)fetchRandomImagesOnBackgroundThreadWithNum:(int)numImages;
+-(NSArray*)fetchImagesOnBackgroundThread;
+
 
 #pragma mark - Local Data Store Helper Methods
 
@@ -105,16 +110,22 @@
 -(GWArea*)persistAreaOrUpdateWithJson:(NSDictionary*)areaJson withArray:(NSArray*)theArray withContext:(NSManagedObjectContext*)theContext;
 
 
--(BOOL)textExistsWithId:(NSString*)theTextId inArray:(NSArray*)theArray;
 -(GWText*)textWithId:(NSString*)theTextId inArray:(NSArray*)theArray;
--(BOOL)tagExistsWithId:(NSString*)theTagId inArray:(NSArray*)theArray;
 -(GWTag*)tagWithId:(NSString*)theTagId inArray:(NSArray*)theArray;
--(BOOL)intentionExistsWithId:(NSString*)theIntentionId inArray:(NSArray*)theArray;
 -(GWIntention*)intentionWithId:(NSString*)theIntentionId inArray:(NSArray*)theArray;
--(BOOL)areaExistsWithId:(NSString*)theAreaId inArray:(NSArray*)theArray;
 -(GWArea*)areaWithId:(NSString*)theAreaId inArray:(NSArray*)theArray;
+-(GWImage*)imageWithId:(NSString*)theImageId inArray:(NSArray*)theArray;
 
 #pragma mark - Download Methods
+
+#pragma mark - Image Download Methods
+
+-(void)downloadImagesAndPersistWithIntentionSlug:(NSString*)theIntentionSlug withNumImagesToDownload:(NSInteger)theNumImages withCompletion:(void (^)(NSArray *theImageIds, NSError *error))block;
+-(void)downloadImagesAndPersistWithRecipientId:(NSString*)theRecipientId withNumImagesToDownload:(NSInteger)theNumImages withCompletion:(void (^)(NSArray *theImageIds, NSError *error))block;
+-(void)downloadImagePathsWithIntentionSlug:(NSString*)theIntentionSlug withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;
+-(void)downloadImagePathsWithRecipientId:(NSString*)theRecipientId withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;
+-(void)downloadImagesWithUrls:(NSArray*)theImageUrls withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;
+-(void)downloadImageWithUrl:(NSString*)theImageUrl withCompletion:(void (^)(NSString *imageId, NSError *error))block;
 
 #pragma mark - Text Download Methods
 

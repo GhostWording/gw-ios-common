@@ -9,6 +9,7 @@
 #import "ServerCommunication.h"
 
 const NSString *apiPath = @"http://api.cvd.io/";
+const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
 
 @interface ServerCommunication () {
     NSURLSession *session;
@@ -63,10 +64,12 @@ const NSString *apiPath = @"http://api.cvd.io/";
     
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
-        NSMutableArray *imagePaths = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        [imagePaths removeLastObject];
-        NSLog(@"the paths: %@", imagePaths);
-        block(imagePaths, error);
+        NSMutableArray *allImagePaths = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        [allImagePaths removeLastObject];
+        NSOrderedSet *imagePathsWithoutDoubles = [NSOrderedSet orderedSetWithArray:allImagePaths];
+        NSArray *uniqueImagePaths = [imagePathsWithoutDoubles array];
+        //NSLog(@"the paths: %@", uniqueImagePaths);
+        block(uniqueImagePaths, error);
         
     }] resume];
 }
@@ -105,13 +108,23 @@ const NSString *apiPath = @"http://api.cvd.io/";
     
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
-        NSMutableArray *imagePaths = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        [imagePaths removeLastObject];
-        NSLog(@"the paths: %@", imagePaths);
-        block(imagePaths, error);
+        NSMutableArray *allImagePaths = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        [allImagePaths removeLastObject];
+        NSOrderedSet *imagePathsWithoutDoubles = [NSOrderedSet orderedSetWithArray:allImagePaths];
+        NSArray *uniqueImagePaths = [imagePathsWithoutDoubles array];
+        //NSLog(@"the paths: %@", uniqueImagePaths);
+        block(uniqueImagePaths, error);
 
         
     }] resume];
+}
+
+-(NSData*)downloadImageWithImagePath:(NSString *)theImagePath {
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", apiImagePath, theImagePath]];
+    NSData *imageData = [NSData dataWithContentsOfURL:url];
+    
+    return imageData;
     
 }
 

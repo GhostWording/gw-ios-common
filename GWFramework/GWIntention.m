@@ -52,7 +52,9 @@
     
     self.areaId = jsonDict[@"AreaId"];
     self.culture = jsonDict[@"Culture"];
-    self.intentionDescription = jsonDict[@"Description"];
+    if (jsonDict[@"Description"] != [NSNull null]) {
+        self.intentionDescription = jsonDict[@"Description"];
+    }
     self.hasImage = jsonDict[@"HasImage"];
     self.imagePath = jsonDict[@"ImagePath"];
     self.impersonal = jsonDict[@"Impersonal"];
@@ -87,7 +89,7 @@
 }
 
 -(NSString*)description {
-    return [NSString stringWithFormat:@"GWIntention areaId: %@, culture: %@, intentionDescription: %@, hasImage: %@, imagePath: %@, impersonal: %@, intentionId: %@, label: %@, updateDate: %@, mostRecentTextUpdateEpoch: %@, recurring: %@, slug: %@, slugPrototypeLink: %@, sortOrder: %@, sortOrderInArea: %@, weightingCoefficient: %@, labels: %@", self.areaId, self.culture, self.intentionDescription, self.hasImage, self.imagePath, self.impersonal, self.intentionId, self.label, self.updateDate, self.mostRecentTextUpdateEpoch, self.recurring, self.slug, self.slugPrototypeLink, self.sortOrder, self.sortOrderInArea, self.weightingCoefficient, self.labels];
+    return [NSString stringWithFormat:@"GWIntention areaId: %@, culture: %@, intentionDescription: %@, hasImage: %@, imagePath: %@, impersonal: %@, intentionId: %@, label: %@, updateDate: %@, mostRecentTextUpdateEpoch: %@, recurring: %@, slug: %@, slugPrototypeLink: %@, sortOrder: %@, sortOrderInArea: %@, weightingCoefficient: %@", self.areaId, self.culture, self.intentionDescription, self.hasImage, self.imagePath, self.impersonal, self.intentionId, self.label, self.updateDate, self.mostRecentTextUpdateEpoch, self.recurring, self.slug, self.slugPrototypeLink, self.sortOrder, self.sortOrderInArea, self.weightingCoefficient];
 }
 
 @end
