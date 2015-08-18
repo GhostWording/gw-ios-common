@@ -28,8 +28,12 @@
 
 -(NSArray*)fetchIntentions;
 -(NSArray*)fetchIntentionsWithCulture:(NSString*)theCulture;
+-(NSArray*)fetchIntentionsWithArea:(NSString*)theArea withCulture:(NSString*)theCulture;
 
 // MARK: Text methods
+
+/* Returns the number of texts in the database **/
+-(NSInteger)fetchNumTexts;
 
 /* Fetches all the texts on the main queue. **/
 -(NSArray*)fetchTexts;
@@ -75,6 +79,7 @@
 
 -(NSArray*)fetchIntentionsOnBackgroundThread;
 -(NSArray*)fetchIntentionsOnBackgroundThreadWithCulture:(NSString*)theCulture;
+-(NSArray*)fetchIntentionsOnBackgroundThreadWithArea:(NSString*)theAreaName withCulture:(NSString*)theCulture;
 
 // MARK: Background Text methods
 
@@ -91,8 +96,20 @@
 /* Fetch texts on background thread for the given intention slug, recipient tag and culture **/
 -(NSArray*)fetchTextsOnBackgroundThreadForIntentionSlug:(NSString *)theIntentionSlug withRecipientType:(NSString*)recipientTypeTag withCulture:(NSString *)theCulture;
 
+/* **/
+-(NSArray*)randomIndexesFromArray:(NSArray*)theArray withNumRandomIndexes:(NSInteger)numRandomIndexes;
+
+
+/* Returns the number of images in the datastore. **/
+-(NSInteger)fetchNumImages;
+
+/* Fetches the gives number of images randomly in the database, images are not repeated. **/
 -(NSArray*)fetchRandomImagesWithNum:(int)numImages;
+/* Fetches all images. **/
 -(NSArray*)fetchImages;
+/* Fetches specific images based on the image path (id) in the data store if they exist. **/
+-(NSArray*)fetchImagesWithImagePaths:(NSArray*)theImagePaths;
+
 -(NSArray*)fetchRandomImagesOnBackgroundThreadWithNum:(int)numImages;
 -(NSArray*)fetchImagesOnBackgroundThread;
 
@@ -103,8 +120,8 @@
  that object if not it returns a newly created GWText instance.**/
 -(GWText*)persistTextOrUpdateWithJson:(NSDictionary*)textJson withArray:(NSArray*)theArray withContext:(NSManagedObjectContext*)theContext;
 /* takes the intention dictionary serialized from the json and checks the array fetched from the local datastore if it exists, if it exists it returns,
- that object if not it returns a newly created GWIntention instance.**/
--(GWIntention*)persistIntentionOrUpdateWithJson:(NSDictionary*)intentionJson withArray:(NSArray*)theArray withContext:(NSManagedObjectContext*)theContext;
+ that object if not it returns a newly created GWIntention instance. They use not only an id but also an area name as the are specific to an area. **/
+-(GWIntention*)persistIntentionOrUpdateWithAreaName:(NSString*)theAreaName withJson:(NSDictionary*)intentionJson withArray:(NSArray*)theArray withContext:(NSManagedObjectContext*)theContext;
 /* takes the area dictionary serialized from the json and checks the array fetched from the local datastore if it exists, if it exists it returns
  that object if not it returns a newly created GWText instance. **/
 -(GWArea*)persistAreaOrUpdateWithJson:(NSDictionary*)areaJson withArray:(NSArray*)theArray withContext:(NSManagedObjectContext*)theContext;
@@ -116,12 +133,21 @@
 -(GWArea*)areaWithId:(NSString*)theAreaId inArray:(NSArray*)theArray;
 -(GWImage*)imageWithId:(NSString*)theImageId inArray:(NSArray*)theArray;
 
+// MARK: Image helpers
+
+/* Takes an array of strings (image paths in this case), and a second array which are removed from the first array if they match and returns the image paths left.  **/
+-(NSArray*)removeImagePathsInArray:(NSArray*)theImagePaths withImagePathsToRemove:(NSArray*)theImagePathsToRemove;
+/* Takes an array of strings (image paths in this case), and a second array of GWImage object and removes all paths that match with the image paths in the first array and returns an array with the image paths left. **/
+-(NSArray *)removeImagePathsInArray:(NSArray*)theImagePaths withImagesToRemove:(NSArray*)theImagesToRemove;
+
 #pragma mark - Download Methods
 
 #pragma mark - Image Download Methods
 
+-(void)downloadImagesAndPersistWithRelativePath:(NSString*)theRelativePath withNumImagesToDownload:(NSInteger)theNumImages withCompletion:(void(^)(NSArray *theImageIds, NSError *error))block;
 -(void)downloadImagesAndPersistWithIntentionSlug:(NSString*)theIntentionSlug withNumImagesToDownload:(NSInteger)theNumImages withCompletion:(void (^)(NSArray *theImageIds, NSError *error))block;
 -(void)downloadImagesAndPersistWithRecipientId:(NSString*)theRecipientId withNumImagesToDownload:(NSInteger)theNumImages withCompletion:(void (^)(NSArray *theImageIds, NSError *error))block;
+-(void)downloadImagePathsWithRelativePath:(NSString*)theRelativePath withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;
 -(void)downloadImagePathsWithIntentionSlug:(NSString*)theIntentionSlug withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;
 -(void)downloadImagePathsWithRecipientId:(NSString*)theRecipientId withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;
 -(void)downloadImagesWithUrls:(NSArray*)theImageUrls withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;

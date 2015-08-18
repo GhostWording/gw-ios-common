@@ -44,8 +44,9 @@
     if ([[[NSThread currentThread] threadDictionary] valueForKey:@"objectContext"] == nil) {
         
         NSManagedObjectContext *context = [[NSManagedObjectContext alloc] init];
-        context.parentContext = self.mainObjectContext;
-        
+        //context.parentContext = self.mainObjectContext;
+        context.persistentStoreCoordinator = self.persistentStoreCoordinator;
+        context.mergePolicy = [[NSMergePolicy alloc] initWithMergeType:NSMergeByPropertyObjectTrumpMergePolicyType];
         
         [[[NSThread currentThread] threadDictionary] setValue:context forKey:@"objectContext"];
         
@@ -84,6 +85,17 @@
     if (_managedObjectModel != nil) {
         return _managedObjectModel;
     }
+    
+    for (NSBundle *bundle in [NSBundle allBundles]) {
+        NSURL *modelURL = [bundle URLForResource:@"GWFramework" withExtension:@"momd"];
+        if (modelURL != nil) {
+            NSLog(@"found model: %@", modelURL);
+        }
+        else {
+            NSLog(@"did not find model: %@", modelURL);
+        }
+    }
+    
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"GWFramework" withExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;
@@ -101,6 +113,7 @@
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"GWFramework.sqlite"];
     NSError *error = nil;
     NSString *failureReason = @"There was an error creating or loading the application's saved data.";
+    
     if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
         // Report any error we got.
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];

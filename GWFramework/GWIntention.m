@@ -2,33 +2,37 @@
 //  GWIntention.m
 //  GWFramework
 //
-//  Created by Mathieu Skulason on 21/07/15.
+//  Created by Mathieu Skulason on 18/08/15.
 //  Copyright (c) 2015 Mathieu Skulason. All rights reserved.
 //
 
 #import "GWIntention.h"
+#import "GWIntentionAreaBehavior.h"
 #import "GWIntentionLabel.h"
+
 
 @implementation GWIntention
 
-@dynamic areaId;
-@dynamic sortOrderInArea;
+@dynamic culture;
 @dynamic hasImage;
 @dynamic imagePath;
-@dynamic intentionId;
-@dynamic updateDate;
-@dynamic sortOrder;
-@dynamic culture;
+@dynamic impersonal;
 @dynamic intentionDescription;
-@dynamic slug;
-@dynamic slugPrototypeLink;
+@dynamic intentionId;
 @dynamic label;
 @dynamic mostRecentTextUpdate;
 @dynamic mostRecentTextUpdateEpoch;
-@dynamic weightingCoefficient;
 @dynamic recurring;
-@dynamic impersonal;
+@dynamic slug;
+@dynamic slugPrototypeLink;
+@dynamic sortOrder;
+@dynamic sortOrderInArea;
+@dynamic updateDate;
+@dynamic weightingCoefficient;
+@dynamic areaName;
 @dynamic labels;
+@dynamic intentionBehavior;
+
 
 +(instancetype)createGWIntention {
     GWIntention *intention = [NSEntityDescription insertNewObjectForEntityForName:@"GWIntention" inManagedObjectContext:[[GWCoreDataManager sharedInstance] mainObjectContext]];
@@ -41,22 +45,32 @@
 }
 
 
-+(instancetype)createGWIntentionWithDict:(NSDictionary *)jsonDict withContext:(NSManagedObjectContext *)theContext {
++(instancetype)createGWIntentionWithAreaName:(NSString *)theAreaName withDict:(NSDictionary *)jsonDict withContext:(NSManagedObjectContext *)theContext {
     GWIntention *intention = [GWIntention createIntentionWithContext:theContext];
-    [intention updateIntentionWithDict:jsonDict withContext:theContext];
+    [intention updateIntentionWithAreaName:theAreaName withDict:jsonDict withContext:theContext];
     
     return intention;
 }
 
--(void)updateIntentionWithDict:(NSDictionary *)jsonDict withContext:(NSManagedObjectContext *)theContext {
+-(void)updateIntentionWithAreaName:(NSString *)theAreaName withDict:(NSDictionary *)jsonDict withContext:(NSManagedObjectContext *)theContext {
     
-    self.areaId = jsonDict[@"AreaId"];
+    self.areaName = theAreaName;
     self.culture = jsonDict[@"Culture"];
+    
     if (jsonDict[@"Description"] != [NSNull null]) {
         self.intentionDescription = jsonDict[@"Description"];
     }
+
     self.hasImage = jsonDict[@"HasImage"];
-    self.imagePath = jsonDict[@"ImagePath"];
+    
+    if (jsonDict[@"ImagePath"] != [NSNull null]) {
+        self.imagePath = jsonDict[@"ImagePath"];
+    }
+    
+    if (jsonDict[@"SortOrderInArea"] != [NSNull null]) {
+        self.sortOrderInArea = jsonDict[@"SortOrderInArea"];
+    }
+    
     self.impersonal = jsonDict[@"Impersonal"];
     self.intentionId = jsonDict[@"IntentionId"];
     self.label = jsonDict[@"Label"];
@@ -67,7 +81,7 @@
     self.slug = jsonDict[@"Slug"];
     self.slugPrototypeLink = jsonDict[@"SlugPrototypeLink"];
     self.sortOrder = jsonDict[@"SortOrder"];
-    self.sortOrderInArea = jsonDict[@"SortOrderInArea"];
+    //self.sortOrderInArea = jsonDict[@"SortOrderInArea"];
     self.weightingCoefficient = jsonDict[@"WeightingCoefficient"];
     
     NSArray *labels = jsonDict[@"Labels"];
@@ -86,10 +100,32 @@
     
     self.labels = labelSet;
     
+    /*
+    NSMutableSet *intentionBehaviorSet = [NSMutableSet set];
+    
+    if (self.intentionBehavior != nil) {
+        for (GWIntentionAreaBehavior *intentionBehavior in self.intentionBehavior) {
+            
+            if ([intentionBehavior.areaName isEqualToString:theAreaName]) {
+                
+                [theContext deleteObject:intentionBehavior];
+                
+            }
+            
+            GWIntentionAreaBehavior *newIntentionBehavior = [GWIntentionAreaBehavior createGWIntentionAreaBehaviorWithDict:jsonDict withIntention:self withContext:theContext];
+            [intentionBehaviorSet addObject:newIntentionBehavior];
+            
+        }
+    }
+    
+    self.intentionBehavior = intentionBehaviorSet;
+    */
 }
 
 -(NSString*)description {
-    return [NSString stringWithFormat:@"GWIntention areaId: %@, culture: %@, intentionDescription: %@, hasImage: %@, imagePath: %@, impersonal: %@, intentionId: %@, label: %@, updateDate: %@, mostRecentTextUpdateEpoch: %@, recurring: %@, slug: %@, slugPrototypeLink: %@, sortOrder: %@, sortOrderInArea: %@, weightingCoefficient: %@", self.areaId, self.culture, self.intentionDescription, self.hasImage, self.imagePath, self.impersonal, self.intentionId, self.label, self.updateDate, self.mostRecentTextUpdateEpoch, self.recurring, self.slug, self.slugPrototypeLink, self.sortOrder, self.sortOrderInArea, self.weightingCoefficient];
+    return [NSString stringWithFormat:@"GWIntention culture: %@, intentionDescription: %@, impersonal: %@, intentionId: %@, label: %@, updateDate: %@, mostRecentTextUpdateEpoch: %@, recurring: %@, slug: %@, slugPrototypeLink: %@, sortOrder: %@, weightingCoefficient: %@", self.culture, self.intentionDescription, self.impersonal, self.intentionId, self.label, self.updateDate, self.mostRecentTextUpdateEpoch, self.recurring, self.slug, self.slugPrototypeLink, self.sortOrder, self.weightingCoefficient];
 }
+
+
 
 @end

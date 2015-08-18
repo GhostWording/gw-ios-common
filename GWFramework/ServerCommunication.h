@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSString *acceptLanguage;
 
 // MARK: Image download
+-(void)downloadImageIdsForRelativePath:(NSString*)theRelativePath withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;
 -(void)downloadImageIdsForIntentionSlug:(NSString*)theIntentionSlug withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;
 -(void)downloadImageIdsForRecipientId:(NSString*)theRecipientId withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;
 -(NSData*)downloadImageWithImagePath:(NSString*)theImagePath;

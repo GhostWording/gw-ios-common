@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		884746D61B62E37200F37627 /* GWDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 884746D51B62E37200F37627 /* GWDataManager.m */; };
+		8851752D1B837A380007B16C /* GWIntentionAreaBehavior.m in Sources */ = {isa = PBXBuildFile; fileRef = 8851752C1B837A380007B16C /* GWIntentionAreaBehavior.m */; };
+		885175331B837AAE0007B16C /* GWIntention.m in Sources */ = {isa = PBXBuildFile; fileRef = 885175321B837AAE0007B16C /* GWIntention.m */; };
 		8875EAB91B6FBA81000AE935 /* GWIntentionPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8875EAB81B6FBA81000AE935 /* GWIntentionPresenter.m */; };
 		8875EAC01B70F8DF000AE935 /* GWLocalizedBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8875EABF1B70F8DF000AE935 /* GWLocalizedBundle.m */; };
 		8875EAC11B7109A8000AE935 /* IntentionLocalizedStrings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8875EAC31B7109A8000AE935 /* IntentionLocalizedStrings.strings */; };
@@ -23,7 +25,6 @@
 		889DB6DA1B5E8A1200194FDE /* GWText.m in Sources */ = {isa = PBXBuildFile; fileRef = 889DB6D91B5E8A1200194FDE /* GWText.m */; };
 		889DB6DE1B5E8AF200194FDE /* GWCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 889DB6DD1B5E8AF200194FDE /* GWCoreDataManager.m */; };
 		889DB6E11B5E9FAE00194FDE /* GWTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 889DB6E01B5E9FAE00194FDE /* GWTag.m */; };
-		889DB6E61B5EA62C00194FDE /* GWIntention.m in Sources */ = {isa = PBXBuildFile; fileRef = 889DB6E51B5EA62C00194FDE /* GWIntention.m */; };
 		889DB6E91B5EA63C00194FDE /* GWIntentionLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 889DB6E81B5EA63C00194FDE /* GWIntentionLabel.m */; };
 		88E6A70A1B5EC29800DF93A3 /* GWImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E6A7091B5EC29800DF93A3 /* GWImage.m */; };
 		88E6A70D1B5EC29900DF93A3 /* GWAreaCulture.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E6A70C1B5EC29900DF93A3 /* GWAreaCulture.m */; };
@@ -43,6 +44,10 @@
 /* Begin PBXFileReference section */
 		884746D41B62E37200F37627 /* GWDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWDataManager.h; sourceTree = "<group>"; };
 		884746D51B62E37200F37627 /* GWDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWDataManager.m; sourceTree = "<group>"; };
+		8851752B1B837A380007B16C /* GWIntentionAreaBehavior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWIntentionAreaBehavior.h; sourceTree = "<group>"; };
+		8851752C1B837A380007B16C /* GWIntentionAreaBehavior.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWIntentionAreaBehavior.m; sourceTree = "<group>"; };
+		885175311B837AAE0007B16C /* GWIntention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWIntention.h; sourceTree = "<group>"; };
+		885175321B837AAE0007B16C /* GWIntention.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWIntention.m; sourceTree = "<group>"; };
 		8875EAB71B6FBA81000AE935 /* GWIntentionPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWIntentionPresenter.h; sourceTree = "<group>"; };
 		8875EAB81B6FBA81000AE935 /* GWIntentionPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWIntentionPresenter.m; sourceTree = "<group>"; };
 		8875EABE1B70F8DF000AE935 /* GWLocalizedBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWLocalizedBundle.h; sourceTree = "<group>"; };
@@ -76,8 +81,6 @@
 		889DB6DD1B5E8AF200194FDE /* GWCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWCoreDataManager.m; sourceTree = "<group>"; };
 		889DB6DF1B5E9FAE00194FDE /* GWTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTag.h; sourceTree = "<group>"; };
 		889DB6E01B5E9FAE00194FDE /* GWTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTag.m; sourceTree = "<group>"; };
-		889DB6E41B5EA62C00194FDE /* GWIntention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWIntention.h; sourceTree = "<group>"; };
-		889DB6E51B5EA62C00194FDE /* GWIntention.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWIntention.m; sourceTree = "<group>"; };
 		889DB6E71B5EA63C00194FDE /* GWIntentionLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWIntentionLabel.h; sourceTree = "<group>"; };
 		889DB6E81B5EA63C00194FDE /* GWIntentionLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWIntentionLabel.m; sourceTree = "<group>"; };
 		88E6A7081B5EC29800DF93A3 /* GWImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWImage.h; sourceTree = "<group>"; };
@@ -128,7 +131,6 @@
 			isa = PBXGroup;
 			children = (
 				8875EABA1B70E3AF000AE935 /* String Localization */,
-				8875EAB61B6FB54D000AE935 /* Area Presentation Object */,
 				8875EAB51B6FB53A000AE935 /* Intention Presentation Object */,
 			);
 			name = PresentationObjects;
@@ -141,13 +143,6 @@
 				8875EAB81B6FBA81000AE935 /* GWIntentionPresenter.m */,
 			);
 			name = "Intention Presentation Object";
-			sourceTree = "<group>";
-		};
-		8875EAB61B6FB54D000AE935 /* Area Presentation Object */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Area Presentation Object";
 			sourceTree = "<group>";
 		};
 		8875EABA1B70E3AF000AE935 /* String Localization */ = {
@@ -275,10 +270,12 @@
 		889DB6E31B5EA3BC00194FDE /* Intention Objects */ = {
 			isa = PBXGroup;
 			children = (
-				889DB6E41B5EA62C00194FDE /* GWIntention.h */,
-				889DB6E51B5EA62C00194FDE /* GWIntention.m */,
+				885175311B837AAE0007B16C /* GWIntention.h */,
+				885175321B837AAE0007B16C /* GWIntention.m */,
 				889DB6E71B5EA63C00194FDE /* GWIntentionLabel.h */,
 				889DB6E81B5EA63C00194FDE /* GWIntentionLabel.m */,
+				8851752B1B837A380007B16C /* GWIntentionAreaBehavior.h */,
+				8851752C1B837A380007B16C /* GWIntentionAreaBehavior.m */,
 			);
 			name = "Intention Objects";
 			sourceTree = "<group>";
@@ -409,14 +406,15 @@
 				889DB6DA1B5E8A1200194FDE /* GWText.m in Sources */,
 				884746D61B62E37200F37627 /* GWDataManager.m in Sources */,
 				88E6A70D1B5EC29900DF93A3 /* GWAreaCulture.m in Sources */,
+				8851752D1B837A380007B16C /* GWIntentionAreaBehavior.m in Sources */,
 				889DB6B01B5DB15500194FDE /* AppDelegate.m in Sources */,
-				889DB6E61B5EA62C00194FDE /* GWIntention.m in Sources */,
 				889DB6E91B5EA63C00194FDE /* GWIntentionLabel.m in Sources */,
 				889DB6D61B5DBA0000194FDE /* ServerCommunication.m in Sources */,
 				889DB6B31B5DB15500194FDE /* GWFramework.xcdatamodeld in Sources */,
 				8875EAB91B6FBA81000AE935 /* GWIntentionPresenter.m in Sources */,
 				88E6A7101B5EC29900DF93A3 /* GWArea.m in Sources */,
 				889DB6E11B5E9FAE00194FDE /* GWTag.m in Sources */,
+				885175331B837AAE0007B16C /* GWIntention.m in Sources */,
 				88E6A70A1B5EC29800DF93A3 /* GWImage.m in Sources */,
 				889DB6B61B5DB15500194FDE /* ViewController.m in Sources */,
 				8875EAC01B70F8DF000AE935 /* GWLocalizedBundle.m in Sources */,
@@ -560,6 +558,10 @@
 		889DB6CE1B5DB15500194FDE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					i386,
+				);
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = GWFramework/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

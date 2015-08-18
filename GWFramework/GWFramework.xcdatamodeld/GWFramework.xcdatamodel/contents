@@ -16,7 +16,7 @@
         <attribute name="imageId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="GWIntention" representedClassName="GWIntention" syncable="YES">
-        <attribute name="areaId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="areaName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="culture" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="hasImage" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="imagePath" optional="YES" attributeType="String" syncable="YES"/>
@@ -33,7 +33,15 @@
         <attribute name="sortOrderInArea" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="updateDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="weightingCoefficient" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="intentionBehavior" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GWIntentionAreaBehavior" inverseName="intention" inverseEntity="GWIntentionAreaBehavior" syncable="YES"/>
         <relationship name="labels" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="GWIntentionLabel" inverseName="intention" inverseEntity="GWIntentionLabel" syncable="YES"/>
+    </entity>
+    <entity name="GWIntentionAreaBehavior" representedClassName="GWIntentionAreaBehavior" syncable="YES">
+        <attribute name="areaName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hasImage" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="imagePath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sortOrderInArea" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="intention" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GWIntention" inverseName="intentionBehavior" inverseEntity="GWIntention" syncable="YES"/>
     </entity>
     <entity name="GWIntentionLabel" representedClassName="GWIntentionLabel" syncable="YES">
         <attribute name="culture" optional="YES" attributeType="String" syncable="YES"/>
@@ -73,7 +81,8 @@
         <element name="GWArea" positionX="-36" positionY="9" width="128" height="105"/>
         <element name="GWAreaCulture" positionX="18" positionY="171" width="128" height="90"/>
         <element name="GWImage" positionX="-18" positionY="135" width="128" height="75"/>
-        <element name="GWIntention" positionX="-54" positionY="-9" width="128" height="315"/>
+        <element name="GWIntention" positionX="-54" positionY="-9" width="128" height="330"/>
+        <element name="GWIntentionAreaBehavior" positionX="-18" positionY="135" width="128" height="120"/>
         <element name="GWIntentionLabel" positionX="0" positionY="144" width="128" height="120"/>
         <element name="GWTag" positionX="-18" positionY="27" width="128" height="75"/>
         <element name="GWText" positionX="-63" positionY="-18" width="128" height="360"/>

@@ -30,6 +30,8 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
         _acceptLanguage = @"fr-FR";
         
         session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+        //session = [NSURLSession sharedSession];
+        //session.configuration.HTTPMaximumConnectionsPerHost = 2;
         
         
     }
@@ -50,11 +52,11 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
 
 #pragma mark - Image Downloading
 
--(void)downloadImageIdsForIntentionSlug:(NSString *)theIntentionSlug withCompletion:(void (^)(NSArray *, NSError *))block {
+-(void)downloadImageIdsForRelativePath:(NSString *)theRelativePath withCompletion:(void (^)(NSArray *, NSError *))block {
     [block copy];
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://gw-static.azurewebsites.net/container/files/specialoccasions/%@/default/small", theIntentionSlug]];
-    NSLog(@"the url: %@", url);
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://gw-static.azurewebsites.net/container/files/%@?size=small", theRelativePath]];
+    NSLog(@"url is: %@", url);
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     
@@ -68,7 +70,33 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
         [allImagePaths removeLastObject];
         NSOrderedSet *imagePathsWithoutDoubles = [NSOrderedSet orderedSetWithArray:allImagePaths];
         NSArray *uniqueImagePaths = [imagePathsWithoutDoubles array];
-        //NSLog(@"the paths: %@", uniqueImagePaths);
+        
+        block(uniqueImagePaths, error);
+        
+    }] resume];
+}
+
+-(void)downloadImageIdsForIntentionSlug:(NSString *)theIntentionSlug withCompletion:(void (^)(NSArray *, NSError *))block {
+    [block copy];
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://gw-static.azurewebsites.net/container/files/specialoccasions/%@/default?size=small", theIntentionSlug]];
+    NSLog(@"the url: %@", url);
+    
+    //good-night
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+    
+    [request setHTTPMethod:@"GET"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    
+    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        NSMutableArray *allImagePaths = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        [allImagePaths removeLastObject];
+        NSOrderedSet *imagePathsWithoutDoubles = [NSOrderedSet orderedSetWithArray:allImagePaths];
+        NSArray *uniqueImagePaths = [imagePathsWithoutDoubles array];
+
         block(uniqueImagePaths, error);
         
     }] resume];
@@ -112,7 +140,7 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
         [allImagePaths removeLastObject];
         NSOrderedSet *imagePathsWithoutDoubles = [NSOrderedSet orderedSetWithArray:allImagePaths];
         NSArray *uniqueImagePaths = [imagePathsWithoutDoubles array];
-        //NSLog(@"the paths: %@", uniqueImagePaths);
+
         block(uniqueImagePaths, error);
 
         
@@ -167,16 +195,17 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:theCulture forHTTPHeaderField:@"Accept-Language"];
     
+
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         
-        NSLog(@"texts with intention slug: %@", array);
+        //NSLog(@"texts with intention slug: %@", array);
         
         block(array, error);
         
     }] resume];
-    
+     
 }
 
 
@@ -197,7 +226,7 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
        
         NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         
-        NSLog(@"received all intentions: %@", array);
+        //NSLog(@"received all intentions: %@", array);
         
         block(array, error);
     }] resume];
@@ -217,8 +246,6 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
        
         NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        
-        NSLog(@"received intentions for area: %@, the intentions: %@", theArea, array);
         
         block(array, error);
         
