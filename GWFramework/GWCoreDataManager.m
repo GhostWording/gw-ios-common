@@ -104,10 +104,21 @@
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
     // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it.
     if (_persistentStoreCoordinator != nil) {
+        @synchronized(_persistentStoreCoordinator) {
+            return _persistentStoreCoordinator;
+        }
+    }
+        
+    // Add this block of code.  Basically, it forces all threads that reach this
+    // code to be processed in an ordered manner on the main thread.  The first
+    // one will initialize the data, and the rest will just return with that
+    // data.  However, it ensures the creation is not attempted multiple times.
+    if (![NSThread currentThread].isMainThread) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            (void)[self persistentStoreCoordinator];
+        });
         return _persistentStoreCoordinator;
     }
-    
-    // Create the coordinator and store
     
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"GWFramework.sqlite"];
@@ -141,6 +152,7 @@
     if (!coordinator) {
         return nil;
     }
+    
     _mainObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     [_mainObjectContext setPersistentStoreCoordinator:coordinator];
     return _mainObjectContext;

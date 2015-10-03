@@ -100,9 +100,15 @@
     NSArray *tags = jsonDict[@"TagIds"];
     NSMutableOrderedSet *mutableSet = [[NSMutableOrderedSet alloc] init];
     
+    /*
     if (self.tagIds != nil) {
         for (GWTag *tag in self.tagIds) {
             [theContext deleteObject:tag];
+        }
+    }*/
+    if (self.tagIds != nil) {
+        for (GWTag *tag in self.tagIds) {
+            tag.text = nil;
         }
     }
     

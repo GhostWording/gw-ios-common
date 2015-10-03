@@ -53,8 +53,13 @@ static NSBundle *bundle = nil;
 
 +(void)setCurrentLocaleString:(NSString *)theLocale {
     
-    if ([theLocale isEqualToString:@"en"] || [theLocale isEqualToString:@"fr"] || [theLocale isEqualToString:@"es"]) {
-        [[NSUserDefaults standardUserDefaults] setValue:theLocale forKey:@"currentLocale"];
+    NSString *partialString = @"";
+    if (theLocale.length >= 2) {
+        partialString = [theLocale substringWithRange:NSMakeRange(0, 2)];
+    }
+    
+    if ([partialString isEqualToString:@"en"] || [partialString isEqualToString:@"fr"] || [partialString isEqualToString:@"es"]) {
+        [[NSUserDefaults standardUserDefaults] setValue:partialString forKey:@"currentLocale"];
     }
     else {
         NSLog(@"not setting current locale string");

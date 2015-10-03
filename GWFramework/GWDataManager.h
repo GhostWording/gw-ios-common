@@ -67,7 +67,9 @@
 // MARK: Tag methods
 
 -(NSArray*)fetchTags;
+-(GWTag*)fetchTagWaithName:(NSString*)tagName;
 -(NSArray*)fetchTagsOnBackgroundThread;
+-(GWTag*)fetchTagWithNameOnBackgroundThread:(NSString*)tagName;
 
 #pragma mark - Local Data Store Methods Background Thread
 
@@ -154,6 +156,9 @@
 -(void)downloadImageWithUrl:(NSString*)theImageUrl withCompletion:(void (^)(NSString *imageId, NSError *error))block;
 
 #pragma mark - Text Download Methods
+
+
+-(void)downloadAllTextsForArea:(NSString *)theArea withCulture:(NSString*)theCulture withCompletion:(void (^)(NSArray *, NSError *))block;
 
 /* Downloads all the texts with the given intention id in the array and returns all the textIds associated. **/
 -(void)downloadTextsWithArea:(NSString*)theArea withIntentionIds:(NSArray*)theIntentionsIds withCulture:(NSString*)theCulture withCompletion:(void (^)(NSArray *textIds, NSError *error))block;

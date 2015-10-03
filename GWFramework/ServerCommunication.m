@@ -7,6 +7,7 @@
 //
 
 #import "ServerCommunication.h"
+#import "GWLocalizedBundle.h"
 
 const NSString *apiPath = @"http://api.cvd.io/";
 const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
@@ -66,12 +67,25 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
     
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
-        NSMutableArray *allImagePaths = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        [allImagePaths removeLastObject];
-        NSOrderedSet *imagePathsWithoutDoubles = [NSOrderedSet orderedSetWithArray:allImagePaths];
-        NSArray *uniqueImagePaths = [imagePathsWithoutDoubles array];
-        
-        block(uniqueImagePaths, error);
+        if (error == nil) {
+            if (data != nil) {
+                NSMutableArray *allImagePaths = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                [allImagePaths removeLastObject];
+                NSOrderedSet *imagePathsWithoutDoubles = [NSOrderedSet orderedSetWithArray:allImagePaths];
+                NSArray *uniqueImagePaths = [imagePathsWithoutDoubles array];
+                
+                block(uniqueImagePaths, error);
+            }
+            else {
+                
+                // MARK: what to do when error and data is nil?
+                
+                block([NSArray array], nil);
+            }
+        }
+        else {
+            block(nil, error);
+        }
         
     }] resume];
 }
@@ -92,12 +106,23 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
     
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
-        NSMutableArray *allImagePaths = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        [allImagePaths removeLastObject];
-        NSOrderedSet *imagePathsWithoutDoubles = [NSOrderedSet orderedSetWithArray:allImagePaths];
-        NSArray *uniqueImagePaths = [imagePathsWithoutDoubles array];
-
-        block(uniqueImagePaths, error);
+        if (error == nil) {
+            if (data != nil) {
+                NSMutableArray *allImagePaths = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                [allImagePaths removeLastObject];
+                NSOrderedSet *imagePathsWithoutDoubles = [NSOrderedSet orderedSetWithArray:allImagePaths];
+                NSArray *uniqueImagePaths = [imagePathsWithoutDoubles array];
+                
+                block(uniqueImagePaths, error);
+            }
+            else {
+                // MARK: What to do when error and data is nil?
+                block([NSArray array], nil);
+            }
+        }
+        else {
+            block(nil, error);
+        }
         
     }] resume];
 }
@@ -136,12 +161,27 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
     
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
-        NSMutableArray *allImagePaths = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        [allImagePaths removeLastObject];
-        NSOrderedSet *imagePathsWithoutDoubles = [NSOrderedSet orderedSetWithArray:allImagePaths];
-        NSArray *uniqueImagePaths = [imagePathsWithoutDoubles array];
-
-        block(uniqueImagePaths, error);
+        if (error == nil) {
+            
+            if (data != nil) {
+                NSMutableArray *allImagePaths = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                [allImagePaths removeLastObject];
+                NSOrderedSet *imagePathsWithoutDoubles = [NSOrderedSet orderedSetWithArray:allImagePaths];
+                NSArray *uniqueImagePaths = [imagePathsWithoutDoubles array];
+                
+                block(uniqueImagePaths, nil);
+            }
+            else {
+                
+                // MARK: what if the error gives us no data and no error?
+                
+                block([NSArray array], nil);
+            }
+            
+        }
+        else {
+            block(nil, error);
+        }
 
         
     }] resume];
@@ -172,11 +212,24 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
     
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
-        NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        
-        NSLog(@"texts with intention id: %@", array);
-        
-        block(array, error);
+        if (error == nil) {
+            if (data != nil) {
+                NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                
+                NSLog(@"texts with intention id: %@", array);
+                
+                block(array, error);
+            }
+            else {
+                
+                // MARK: What to do when error and data is nil?
+                
+                block([NSArray array], nil);
+            }
+        }
+        else {
+            block(nil, error);
+        }
         
     }] resume];
     
@@ -198,11 +251,21 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
 
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
-        NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        
-        //NSLog(@"texts with intention slug: %@", array);
-        
-        block(array, error);
+        if (error == nil) {
+            if (data != nil) {
+                NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                
+                //NSLog(@"texts with intention slug: %@", array);
+                
+                block(array, error);
+            }
+            else {
+                block([NSArray array], nil);
+            }
+        }
+        else {
+            block(nil, error);
+        }
         
     }] resume];
      
@@ -224,11 +287,24 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
     
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
        
-        NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        if (error == nil) {
+            if (data != nil) {
+                NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                
+                //NSLog(@"received all intentions: %@", array);
+                
+                block(array, error);
+            }
+            else {
+                
+                // MARK: What do do when data and error is nil?
+                block([NSArray array], nil);
+            }
+        }
+        else {
+            block(nil, error);
+        }
         
-        //NSLog(@"received all intentions: %@", array);
-        
-        block(array, error);
     }] resume];
 }
 
@@ -245,9 +321,22 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
     
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
        
-        NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        
-        block(array, error);
+        if (error == nil) {
+            if (data != nil) {
+                NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                
+                block(array, error);
+            }
+            else {
+                
+                // MARK: What to do when data and error is nil
+                
+                block([NSArray array], nil);
+            }
+        }
+        else {
+            block(nil, error);
+        }
         
     }] resume];
     
@@ -268,11 +357,25 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
     
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
-        NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        
-        NSLog(@"received areas: %@", array);
-        
-        block(array, error);
+        if (error == nil) {
+            if (data != nil) {
+                NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                
+                NSLog(@"received areas: %@", array);
+                
+                block(array, error);
+            }
+            else {
+                
+                // Mark: What to do when data and error is nil
+                
+                block([NSArray array], nil);
+            }
+        }
+        else {
+            
+            block(nil,error);
+        }
         
     }] resume];
 }
@@ -290,11 +393,24 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
     
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
        
-        NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        
-        NSLog(@"Received are: %@", array);
-        
-        block(array, error);
+        if (error == nil) {
+            if (data != nil) {
+                NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                
+                NSLog(@"Received are: %@", array);
+                
+                block(array, error);
+            }
+            else {
+                
+                // MARK: What to do when error and data is nil
+                
+                block([NSArray array], nil);
+            }
+        }
+        else {
+            block(nil, error);
+        }
         
     }] resume];
     

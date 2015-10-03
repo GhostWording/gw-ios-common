@@ -77,5 +77,6 @@
 +(instancetype)intentionMerryChristmas;
 +(instancetype)intentionSalutationClosingFormula;
 
++(NSArray*)allIntentions;
 
 @end

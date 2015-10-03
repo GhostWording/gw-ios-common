@@ -238,6 +238,19 @@
     return theTags;
 }
 
+-(GWTag*)fetchTagWaithName:(NSString *)tagName {
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWTag"];
+    [request setPredicate:[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"tagId like[c] '%@'", tagName]]];
+    
+    NSArray *theTexts = [[[GWCoreDataManager sharedInstance] mainObjectContext] executeFetchRequest:request error:nil];
+    
+    if (theTexts.count > 0) {
+        return [theTexts firstObject];
+    }
+    
+    return nil;
+}
+
 -(NSArray*)fetchTagsOnBackgroundThread {
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWTag"];
@@ -245,6 +258,21 @@
     NSArray *theTags = [[[GWCoreDataManager sharedInstance] childContext] executeFetchRequest:request error:nil];
     
     return theTags;
+}
+
+-(GWTag*)fetchTagWithNameOnBackgroundThread:(NSString *)tagName {
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWTag"];
+    [request setPredicate:[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"tagId like[c] '%@'", tagName]]];
+    
+    NSArray *theTexts = [[[GWCoreDataManager sharedInstance] childContext] executeFetchRequest:request error:nil];
+    
+    if (theTexts.count > 0) {
+        return [theTexts firstObject];
+    }
+    
+    return nil;
+    
 }
 
 // MARK: Image methods
@@ -812,6 +840,44 @@
 
 #pragma mark - Text downloads
 
+
+// MARK: Download for all texts
+
+-(void)downloadAllTextsForArea:(NSString *)theArea withCulture:(NSString*)theCulture withCompletion:(void (^)(NSArray *, NSError *))block {
+    [block copy];
+    
+    NSLog(@"downloading intentions");
+    
+    GWDataManager *theDataMan = [[GWDataManager alloc] init];
+    
+    [theDataMan downloadIntentionsWithArea:theArea withCulture:theCulture withCompletion:^(NSArray *intentionIds, NSError *error) {
+        
+        NSLog(@"downlaod intention response");
+        
+        GWDataManager *newDataMan = [[GWDataManager alloc] init];
+        
+        NSArray *allIntentions = [newDataMan fetchIntentionsOnBackgroundThread];
+        //NSLog(@"all intentions: %@", allIntentions);
+        NSArray *intentionsFromArray = [allIntentions valueForKey:@"intentionId"];
+        NSMutableSet *set = [[NSMutableSet alloc] initWithArray:intentionsFromArray];
+        intentionsFromArray = [set allObjects];
+        
+        if (error) {
+            block(nil, error);
+            return ;
+        }
+        
+        GWDataManager *anotherDataMan = [[GWDataManager alloc] init];
+        [anotherDataMan downloadTextsWithArea:theArea withIntentionIds:intentionsFromArray withCulture:theCulture withCompletion:^(NSArray *textIds, NSError *error) {
+            NSLog(@"downloading texts on main thread in text ids: %@", textIds);
+            block(textIds, error);
+        }];
+        
+    }];
+    
+    
+}
+
 -(void)downloadTextsWithArea:(NSString *)theArea withIntentionIds:(NSArray *)theIntentionsIds withCulture:(NSString *)theCulture withCompletion:(void (^)(NSArray *, NSError *))block {
     [block copy];
     
@@ -856,7 +922,7 @@
         NSManagedObjectContext *childContext = [[GWCoreDataManager sharedInstance] childContext];
         GWDataManager *dataMan = [[GWDataManager alloc] init];
         NSArray *textsForIntention = [dataMan fetchTextsOnBackgroundThreadForIntentionId:intentionId withCulture:theCulture];
-        NSLog(@"Texts for intention: %@", textsForIntention);
+        //NSLog(@"Texts for intention: %@", textsForIntention);
         
         for (NSDictionary *textJson in theTexts) {
             
@@ -865,7 +931,7 @@
             
         }
         
-        NSLog(@"texts after for loop");
+        //NSLog(@"texts after for loop");
         [childContext save:nil];
         
         //[[GWCoreDataManager sharedInstance] saveContext];
@@ -912,7 +978,7 @@
     
     
     if (theNumber >= theIntentionSlugs.count) {
-        NSLog(@"finished iterating through all intentions");
+        //NSLog(@"finished iterating through all intentions");
         block(nil, nil);
         return ;
     }
@@ -924,7 +990,7 @@
         [self downloadTextsWithArea:theArea withIntentionSlug:intentionToDownload withCulture:theCulture withCompletion:^(NSArray *textIds, NSError *error) {
            
             if (!error) {
-                NSLog(@"weak self is: %@", wSelf);
+                //NSLog(@"weak self is: %@", wSelf);
                 [wSelf downloadTextsRecursiveWithArea:theArea withIntentionSlugs:theIntentionSlugs withCulture:theCulture withNum:(theNumber + 1) withCompletion:block];
             }
             else {
@@ -956,7 +1022,7 @@
             
         }
         
-        NSLog(@"texts after for loop");
+        //NSLog(@"texts after for loop");
         [childContext save:nil];
         
         //[[GWCoreDataManager sharedInstance] saveContext];
