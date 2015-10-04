@@ -336,12 +336,17 @@
 }
 
 -(NSArray*)fetchImagesWithImagePaths:(NSArray *)theImagePaths {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"imageId IN %@", theImagePaths];
     
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"GWImage"];
-    [fetchRequest setPredicate:predicate];
+    NSArray *theImages = nil;
     
-    NSArray *theImages = [[[GWCoreDataManager sharedInstance] mainObjectContext] executeFetchRequest:fetchRequest error:nil];
+    if (theImagePaths != nil) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"imageId IN %@", theImagePaths];
+        
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"GWImage"];
+        [fetchRequest setPredicate:predicate];
+        
+        theImages = [[[GWCoreDataManager sharedInstance] mainObjectContext] executeFetchRequest:fetchRequest error:nil];
+    }
     
     return theImages;
 }
