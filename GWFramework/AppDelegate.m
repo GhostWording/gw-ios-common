@@ -12,6 +12,7 @@
 #import "GWText.h"
 #import "GWCoreDataManager.h"
 #import "GWIntentionPresenter.h"
+#import "GWRealmDataManager.h"
 
 @interface AppDelegate ()
 
@@ -25,6 +26,45 @@
     
     [GWCoreDataManager sharedInstance];
     
+    GWRealmDataManager *realmDataMan = [[GWRealmDataManager alloc] init];
+    
+    NSLog(@"default path: %@", [RLMRealm defaultRealm].path);
+    
+    [realmDataMan downloadAllTextsWithArea:@"LipTip" culture:@"fr-FR" withCompletion:^(NSArray *theIntentions, NSArray *theTexts, NSError *error) {
+       
+        NSLog(@"number of texts are: %d", [realmDataMan fetchTextsWithCulture:@"fr-FR" areaName:@"LipTip"].count);
+        
+    }];
+    
+    /*
+    [realmDataMan downloadIntentionsWithArea:@"IThinkOfYou" culture:@"fr-FR" withCompletion:^(NSArray *theIntentions, NSError *theError) {
+        
+        NSLog(@"number of intentions are: %d", [realmDataMan fetchIntentionsWithCulture:@"fr-FR"].count);
+        NSLog(@"number of intentions with id are: %d", [realmDataMan fetchIntentionsWithCulture:@"fr-FR" intentionId:@"016E91"].count);
+        
+        
+    }];
+    */
+    /*
+    [realmDataMan downloadTextsWithArea:@"IThinkOfYou" intentionId:@"016E91" culture:@"fr-FR" withCompletion:^(NSArray *theTexts, NSError *theError) {
+       
+        NSLog(@"number of texts are: %d", [realmDataMan fetchTextsWithCulture:@"fr-FR" areaName:@"IThinkOfYou" intentionId:@"016E91"].count);
+        
+    }];
+    */
+    /*
+    ServerCommunication *serverComm = [[ServerCommunication alloc] init];
+    [serverComm downloadIntentionsWithArea:@"IThinkOfYou" withCulture:@"fr-FR" withCompletion:^(NSArray *theIntentions, NSError *theError) {
+        
+    }];
+    
+    
+    GWDataManager *dataMan = [[GWDataManager alloc] init];
+    [dataMan downloadIntentionsWithArea:@"IThinkOfYou" withCulture:@"fr-FR" withCompletion:^(NSArray *intentionIds, NSError *error) {
+        
+    }];
+    */
+    /*
     GWDataManager *dataMan = [[GWDataManager alloc] init];
     [dataMan downloadTextsWithArea:@"IThinkOfYou" withIntentionId:@"016E91" withCulture:@"fr-FR" withCompletion:^(NSArray *textIds, NSError *error) {
         
@@ -38,7 +78,9 @@
         NSLog(@"all tets for multiple intentino ids: %d", (int)[dataMan fetchTextsForIntentionIds:@[@"016E91", [GWIntentionPresenter intentionRoutineIsLurking].intentionId]].count);
         NSLog(@"all texts for multiple intention ids and culture: %d", (int)[dataMan fetchTextsForIntentionIds:@[@"016E91", [GWIntentionPresenter intentionRoutineIsLurking].intentionId] withCulture:@"fr-FR"].count);
         
-    }];
+    }];*/
+    
+    /*
     
     [dataMan downloadIntentionsWithArea:@"IThinkOfYou" withCulture:@"fr-FR" withCompletion:^(NSArray *intentionIds, NSError *error) {
        
@@ -54,7 +96,7 @@
     [dataMan downloadImagePathsWithRecipientId:@"9E2D23" withCompletion:^(NSArray *imagePaths, NSError *error) {
         NSLog(@"image paths for recipient are: %d", (int)imagePaths.count);
     }];
-    
+    */
     /*
     [dataMan downloadImagePathsWithIntentionSlug:[GWIntentionPresenter intentionILikeYou].intentionSlugPrototypeLink withCompletion:^(NSArray *theImagePaths, NSError *error) {
         GWDataManager *newDataMan = [[GWDataManager alloc] init];
@@ -66,7 +108,7 @@
             
         }];
     }];*/
-    
+    /*
     [dataMan downloadImagesAndPersistWithIntentionSlug:[GWIntentionPresenter intentionILoveYou].intentionSlugPrototypeLink withNumImagesToDownload:10 withCompletion:^(NSArray *theImagePaths, NSError *error) {
         NSLog(@"the image paths downloaded: %@", theImagePaths);
         GWDataManager *theDataMan = [[GWDataManager alloc] init];
@@ -75,6 +117,8 @@
     
     GWIntentionPresenter *presenter = [GWIntentionPresenter intentionBravo];
     NSLog(@"Presenter label is: %@", presenter.intentionLabel);
+     */
+     
     /*
     GWDataManager *dataMan = [[GWDataManager alloc] init];
     [dataMan downloadTextsForIntention:@"016E91" withCompletion:^(NSArray *theTexts, NSError *error) {

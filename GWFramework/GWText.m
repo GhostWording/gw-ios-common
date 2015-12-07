@@ -107,9 +107,11 @@
         }
     }*/
     if (self.tagIds != nil) {
+        /* Causing mutated while being enumerated
         for (GWTag *tag in self.tagIds) {
             tag.text = nil;
         }
+         */
     }
     
     for (NSString *tagId in tags) {

@@ -18,9 +18,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    /*
     [self downloadTextsForArea:@"LipTip" withCompletion:^(NSArray *textIds, NSError *error) {
         NSLog(@"downloaded texts for area");
     }];
+     */
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,6 +33,7 @@
 -(void)downloadTextsForArea:(NSString *)theArea withCompletion:(void (^)(NSArray *, NSError *))block {
     [block copy];
     
+    /*
     NSLog(@"downloading intentions");
     
     GWDataManager *theDataMan = [[GWDataManager alloc] init];
@@ -59,7 +62,7 @@
         });
         
     }];
-    
+    */
     /*
     GWDataManager *anotherDataMan = [[GWDataManager alloc] init];
     [anotherDataMan downloadTextsWithArea:theArea withIntentionIds:@[[GWIntentionPresenter intentionILikeYou].intentionId] withCulture:[UserDefaults currentCulture] withCompletion:^(NSArray *textIds, NSError *error) {

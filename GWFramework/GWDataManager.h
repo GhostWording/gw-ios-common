@@ -29,6 +29,7 @@
 -(NSArray*)fetchIntentions;
 -(NSArray*)fetchIntentionsWithCulture:(NSString*)theCulture;
 -(NSArray*)fetchIntentionsWithArea:(NSString*)theArea withCulture:(NSString*)theCulture;
+-(NSArray *)fetchIntentionsWithCulture:(NSString *)theCulture withId:(NSString *)theId;
 
 // MARK: Text methods
 
@@ -39,6 +40,8 @@
 -(NSArray*)fetchTexts;
 /* Fetches all the texts for the given culture on the main **/
 -(NSArray*)fetchTextsForCulture:(NSString*)theCulture;
+/* Fetches all the texts for a given culture ignoring the Texts with the ids in the array. */
+-(NSArray*)fetchTextsForCulture:(NSString *)theCulture ignoringTextIds:(NSArray *)theTextIds;
 /* Fetches all the texts for the given intention id on the main queue. **/
 -(NSArray*)fetchTextsForIntentionId:(NSString*)theIntentionId;
 /* Fetches all the texts for the given intention id and culture on the main queue. **/
@@ -107,6 +110,15 @@
 
 /* Fetches the gives number of images randomly in the database, images are not repeated. **/
 -(NSArray*)fetchRandomImagesWithNum:(int)numImages;
+
+//
+-(NSArray*)fetchRandomImagesWithPredicate:(NSPredicate *)thePredicate withNum:(int)numImages;
+
+-(NSArray*)fetchRandomImagesWithNum:(int)numImages ignoringImages:(NSArray*)theImageIdsIgnore numberOfImagesInDatabase:(int)numDBImages;
+
+/** Fetch set images. */
+-(NSSet *)fetchImageSetWithImagePaths:(NSArray *)theImagePaths;
+
 /* Fetches all images. **/
 -(NSArray*)fetchImages;
 /* Fetches specific images based on the image path (id) in the data store if they exist. **/
@@ -117,6 +129,8 @@
 
 
 #pragma mark - Local Data Store Helper Methods
+
+-(NSArray *)updatedTextsWithArea:(NSString *)theArea intentionId:(NSString *)theIntentionId culture:(NSString *)theCulture texts:(NSArray *)theTexts;
 
 /* takes the text dictionary serialized from the json and checks the array fetched from the local datastore if it exists, if it exists it returns,
  that object if not it returns a newly created GWText instance.**/
@@ -144,11 +158,19 @@
 
 #pragma mark - Download Methods
 
+#pragma mark - Theme Download Method
+
+// Mark: Theme download
+-(void)downloadImageThemesWithCompletion:(void (^)(NSDictionary *theImageThemes, NSError *error))block;
+
 #pragma mark - Image Download Methods
 
+-(void)downloadImagesAndPersistWithPath:(NSString *)thePath withNumImagesToDownload:(NSInteger)theNumImages withCompletion:(void (^)(NSArray *theImageIds, NSError *error))block;
 -(void)downloadImagesAndPersistWithRelativePath:(NSString*)theRelativePath withNumImagesToDownload:(NSInteger)theNumImages withCompletion:(void(^)(NSArray *theImageIds, NSError *error))block;
 -(void)downloadImagesAndPersistWithIntentionSlug:(NSString*)theIntentionSlug withNumImagesToDownload:(NSInteger)theNumImages withCompletion:(void (^)(NSArray *theImageIds, NSError *error))block;
 -(void)downloadImagesAndPersistWithRecipientId:(NSString*)theRecipientId withNumImagesToDownload:(NSInteger)theNumImages withCompletion:(void (^)(NSArray *theImageIds, NSError *error))block;
+
+// without persistance
 -(void)downloadImagePathsWithRelativePath:(NSString*)theRelativePath withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;
 -(void)downloadImagePathsWithIntentionSlug:(NSString*)theIntentionSlug withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;
 -(void)downloadImagePathsWithRecipientId:(NSString*)theRecipientId withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;
@@ -174,7 +196,7 @@
 /* currently not supported, the data is not saved. **/
 -(void)downloadAllIntentionsWithCulture:(NSString*)theCulture withCompletion:(void (^)(NSArray *intentionIds, NSError *error))block;
 /* Downloads all the intentions associated with an area. **/
--(void)downloadIntentionsWithArea:(NSString*)theArea withCulture:(NSString*)theCulture withCompletion:(void (^)(NSArray *intentionIds, NSError *error))block;
+-(NSURLSessionDataTask *)downloadIntentionsWithArea:(NSString*)theArea withCulture:(NSString*)theCulture withCompletion:(void (^)(NSArray *intentionIds, NSError *error))block;
 
 #pragma mark - Text Dwonload Methods
 

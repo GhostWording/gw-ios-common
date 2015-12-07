@@ -8,19 +8,13 @@
 
 #import "GWCoreDataManager.h"
 
-@interface GWCoreDataManager () {
-    NSDateFormatter *dateFormatter;
-}
-
-@end
-
-
 @implementation GWCoreDataManager
 
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize mainObjectContext = _mainObjectContext;
 @synthesize childManagedObjectContext = _childManagedObjectContext;
+@synthesize dateFormatter;
 
 +(instancetype)sharedInstance {
     static dispatch_once_t once;
@@ -41,6 +35,7 @@
 
 -(NSManagedObjectContext*)childContext {
     
+    
     if ([[[NSThread currentThread] threadDictionary] valueForKey:@"objectContext"] == nil) {
         
         NSManagedObjectContext *context = [[NSManagedObjectContext alloc] init];
@@ -53,6 +48,13 @@
     }
     
     return [[[NSThread currentThread] threadDictionary] valueForKey:@"objectContext"];
+    
+    /*
+    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    context.parentContext = self.mainObjectContext;
+    
+    return context;
+     */
 }
 
 -(NSDate*)dateFromJsonString:(NSString *)dateString {

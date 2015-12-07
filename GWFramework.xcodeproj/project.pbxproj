@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A4E2B90C7705B871A32CB0A /* libPods-GWFrameworkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E060F5434DED5B35CE54A63C /* libPods-GWFrameworkTests.a */; };
+		880367DC1BDC43E900688E94 /* RLMResults+GWExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 880367DB1BDC43E900688E94 /* RLMResults+GWExtension.m */; };
+		8813A1AF1BDB0A1100E959EC /* GWRealmDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8813A1AE1BDB0A1100E959EC /* GWRealmDataManager.m */; };
 		884746D61B62E37200F37627 /* GWDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 884746D51B62E37200F37627 /* GWDataManager.m */; };
 		8851752D1B837A380007B16C /* GWIntentionAreaBehavior.m in Sources */ = {isa = PBXBuildFile; fileRef = 8851752C1B837A380007B16C /* GWIntentionAreaBehavior.m */; };
 		885175331B837AAE0007B16C /* GWIntention.m in Sources */ = {isa = PBXBuildFile; fileRef = 885175321B837AAE0007B16C /* GWIntention.m */; };
@@ -26,9 +29,17 @@
 		889DB6DE1B5E8AF200194FDE /* GWCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 889DB6DD1B5E8AF200194FDE /* GWCoreDataManager.m */; };
 		889DB6E11B5E9FAE00194FDE /* GWTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 889DB6E01B5E9FAE00194FDE /* GWTag.m */; };
 		889DB6E91B5EA63C00194FDE /* GWIntentionLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 889DB6E81B5EA63C00194FDE /* GWIntentionLabel.m */; };
+		88B7CD4C1BDC2566004B4BFF /* textTest.json in Resources */ = {isa = PBXBuildFile; fileRef = 88B7CD4B1BDC2566004B4BFF /* textTest.json */; };
+		88D2E17E1BDBB1E400BE6B0C /* GWRLMImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D2E17D1BDBB1E400BE6B0C /* GWRLMImage.m */; };
+		88D2E1831BDBBAA700BE6B0C /* GWRLMText.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D2E1821BDBBAA700BE6B0C /* GWRLMText.m */; };
+		88D2E1871BDBBAB700BE6B0C /* GWRLMIntention.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D2E1861BDBBAB700BE6B0C /* GWRLMIntention.m */; };
+		88D2E18B1BDBBAC600BE6B0C /* GWRLMArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D2E18A1BDBBAC600BE6B0C /* GWRLMArea.m */; };
+		88D2E18E1BDBC86400BE6B0C /* GWRLMIntetionBehavior.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D2E18D1BDBC86400BE6B0C /* GWRLMIntetionBehavior.m */; };
+		88D2E1921BDBD5D000BE6B0C /* NSDate+GWDateExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D2E1911BDBD5D000BE6B0C /* NSDate+GWDateExtension.m */; };
 		88E6A70A1B5EC29800DF93A3 /* GWImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E6A7091B5EC29800DF93A3 /* GWImage.m */; };
 		88E6A70D1B5EC29900DF93A3 /* GWAreaCulture.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E6A70C1B5EC29900DF93A3 /* GWAreaCulture.m */; };
 		88E6A7101B5EC29900DF93A3 /* GWArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E6A70F1B5EC29900DF93A3 /* GWArea.m */; };
+		C07A514B9E85DFE5372AF975 /* libPods-GWFramework.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28934CFAD2FC793F5EBEBAC6 /* libPods-GWFramework.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +53,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		28934CFAD2FC793F5EBEBAC6 /* libPods-GWFramework.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GWFramework.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3226B8977A7208B90A0E4FF9 /* Pods-GWFrameworkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GWFrameworkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GWFrameworkTests/Pods-GWFrameworkTests.debug.xcconfig"; sourceTree = "<group>"; };
+		7CD2FED1366C742391BBC5FC /* Pods-GWFramework.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GWFramework.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GWFramework/Pods-GWFramework.debug.xcconfig"; sourceTree = "<group>"; };
+		880367DA1BDC43E900688E94 /* RLMResults+GWExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLMResults+GWExtension.h"; sourceTree = "<group>"; };
+		880367DB1BDC43E900688E94 /* RLMResults+GWExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLMResults+GWExtension.m"; sourceTree = "<group>"; };
+		8813A1AD1BDB0A1100E959EC /* GWRealmDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWRealmDataManager.h; sourceTree = "<group>"; };
+		8813A1AE1BDB0A1100E959EC /* GWRealmDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWRealmDataManager.m; sourceTree = "<group>"; };
 		884746D41B62E37200F37627 /* GWDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWDataManager.h; sourceTree = "<group>"; };
 		884746D51B62E37200F37627 /* GWDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWDataManager.m; sourceTree = "<group>"; };
 		8851752B1B837A380007B16C /* GWIntentionAreaBehavior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWIntentionAreaBehavior.h; sourceTree = "<group>"; };
@@ -83,12 +101,28 @@
 		889DB6E01B5E9FAE00194FDE /* GWTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTag.m; sourceTree = "<group>"; };
 		889DB6E71B5EA63C00194FDE /* GWIntentionLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWIntentionLabel.h; sourceTree = "<group>"; };
 		889DB6E81B5EA63C00194FDE /* GWIntentionLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWIntentionLabel.m; sourceTree = "<group>"; };
+		88B7CD4B1BDC2566004B4BFF /* textTest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = textTest.json; sourceTree = "<group>"; };
+		88D2E17C1BDBB1E400BE6B0C /* GWRLMImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWRLMImage.h; sourceTree = "<group>"; };
+		88D2E17D1BDBB1E400BE6B0C /* GWRLMImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWRLMImage.m; sourceTree = "<group>"; };
+		88D2E1811BDBBAA700BE6B0C /* GWRLMText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWRLMText.h; sourceTree = "<group>"; };
+		88D2E1821BDBBAA700BE6B0C /* GWRLMText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWRLMText.m; sourceTree = "<group>"; };
+		88D2E1851BDBBAB700BE6B0C /* GWRLMIntention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWRLMIntention.h; sourceTree = "<group>"; };
+		88D2E1861BDBBAB700BE6B0C /* GWRLMIntention.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWRLMIntention.m; sourceTree = "<group>"; };
+		88D2E1891BDBBAC600BE6B0C /* GWRLMArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWRLMArea.h; sourceTree = "<group>"; };
+		88D2E18A1BDBBAC600BE6B0C /* GWRLMArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWRLMArea.m; sourceTree = "<group>"; };
+		88D2E18C1BDBC86400BE6B0C /* GWRLMIntetionBehavior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWRLMIntetionBehavior.h; sourceTree = "<group>"; };
+		88D2E18D1BDBC86400BE6B0C /* GWRLMIntetionBehavior.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWRLMIntetionBehavior.m; sourceTree = "<group>"; };
+		88D2E1901BDBD5D000BE6B0C /* NSDate+GWDateExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+GWDateExtension.h"; sourceTree = "<group>"; };
+		88D2E1911BDBD5D000BE6B0C /* NSDate+GWDateExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+GWDateExtension.m"; sourceTree = "<group>"; };
 		88E6A7081B5EC29800DF93A3 /* GWImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWImage.h; sourceTree = "<group>"; };
 		88E6A7091B5EC29800DF93A3 /* GWImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWImage.m; sourceTree = "<group>"; };
 		88E6A70B1B5EC29900DF93A3 /* GWAreaCulture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWAreaCulture.h; sourceTree = "<group>"; };
 		88E6A70C1B5EC29900DF93A3 /* GWAreaCulture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWAreaCulture.m; sourceTree = "<group>"; };
 		88E6A70E1B5EC29900DF93A3 /* GWArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWArea.h; sourceTree = "<group>"; };
 		88E6A70F1B5EC29900DF93A3 /* GWArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWArea.m; sourceTree = "<group>"; };
+		A916B63290F82DE829E88791 /* Pods-GWFrameworkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GWFrameworkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GWFrameworkTests/Pods-GWFrameworkTests.release.xcconfig"; sourceTree = "<group>"; };
+		E060F5434DED5B35CE54A63C /* libPods-GWFrameworkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GWFrameworkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E707E50358F2BC4ED34B2BF6 /* Pods-GWFramework.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GWFramework.release.xcconfig"; path = "Pods/Target Support Files/Pods-GWFramework/Pods-GWFramework.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +130,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C07A514B9E85DFE5372AF975 /* libPods-GWFramework.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,12 +138,33 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A4E2B90C7705B871A32CB0A /* libPods-GWFrameworkTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8813A1AB1BDB085600E959EC /* Realm Objects */ = {
+			isa = PBXGroup;
+			children = (
+				88D2E1881BDBBABA00BE6B0C /* Area */,
+				88D2E1841BDBBAAC00BE6B0C /* Intentions */,
+				88D2E1801BDBBA8000BE6B0C /* Texts */,
+				88D2E17F1BDBB27000BE6B0C /* Images */,
+			);
+			name = "Realm Objects";
+			sourceTree = "<group>";
+		};
+		8813A1AC1BDB09EE00E959EC /* Realm Data Manager */ = {
+			isa = PBXGroup;
+			children = (
+				8813A1AD1BDB0A1100E959EC /* GWRealmDataManager.h */,
+				8813A1AE1BDB0A1100E959EC /* GWRealmDataManager.m */,
+			);
+			name = "Realm Data Manager";
+			sourceTree = "<group>";
+		};
 		884746D21B62E31E00F37627 /* Data Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,6 +224,8 @@
 				889DB6A91B5DB15500194FDE /* GWFramework */,
 				889DB6C61B5DB15500194FDE /* GWFrameworkTests */,
 				889DB6A81B5DB15500194FDE /* Products */,
+				F810D02A3799E66CA445325F /* Pods */,
+				B329D2BD3E30C241CF0305D9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -189,6 +247,8 @@
 				889DB6B51B5DB15500194FDE /* ViewController.m */,
 				889DB6B71B5DB15500194FDE /* Main.storyboard */,
 				8875EAB41B6FB3FE000AE935 /* PresentationObjects */,
+				88D2E18F1BDBD5AD00BE6B0C /* Categories */,
+				8813A1AB1BDB085600E959EC /* Realm Objects */,
 				889DB6D71B5E83FE00194FDE /* ManagedObjects */,
 				889DB6D31B5DB9B400194FDE /* Managers & Server */,
 				889DB6BA1B5DB15500194FDE /* Images.xcassets */,
@@ -211,6 +271,7 @@
 		889DB6C61B5DB15500194FDE /* GWFrameworkTests */ = {
 			isa = PBXGroup;
 			children = (
+				88B7CD4B1BDC2566004B4BFF /* textTest.json */,
 				889DB6C91B5DB15500194FDE /* GWFrameworkTests.m */,
 				889DB6C71B5DB15500194FDE /* Supporting Files */,
 			);
@@ -231,6 +292,7 @@
 				8875EABD1B70F897000AE935 /* Localized Bundle */,
 				889DB6DB1B5E8AD900194FDE /* Core Data Manager */,
 				884746D21B62E31E00F37627 /* Data Manager */,
+				8813A1AC1BDB09EE00E959EC /* Realm Data Manager */,
 				884746D31B62E35300F37627 /* Server Communication */,
 			);
 			name = "Managers & Server";
@@ -280,6 +342,55 @@
 			name = "Intention Objects";
 			sourceTree = "<group>";
 		};
+		88D2E17F1BDBB27000BE6B0C /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				88D2E17C1BDBB1E400BE6B0C /* GWRLMImage.h */,
+				88D2E17D1BDBB1E400BE6B0C /* GWRLMImage.m */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		88D2E1801BDBBA8000BE6B0C /* Texts */ = {
+			isa = PBXGroup;
+			children = (
+				88D2E1811BDBBAA700BE6B0C /* GWRLMText.h */,
+				88D2E1821BDBBAA700BE6B0C /* GWRLMText.m */,
+			);
+			name = Texts;
+			sourceTree = "<group>";
+		};
+		88D2E1841BDBBAAC00BE6B0C /* Intentions */ = {
+			isa = PBXGroup;
+			children = (
+				88D2E1851BDBBAB700BE6B0C /* GWRLMIntention.h */,
+				88D2E1861BDBBAB700BE6B0C /* GWRLMIntention.m */,
+				88D2E18C1BDBC86400BE6B0C /* GWRLMIntetionBehavior.h */,
+				88D2E18D1BDBC86400BE6B0C /* GWRLMIntetionBehavior.m */,
+			);
+			name = Intentions;
+			sourceTree = "<group>";
+		};
+		88D2E1881BDBBABA00BE6B0C /* Area */ = {
+			isa = PBXGroup;
+			children = (
+				88D2E1891BDBBAC600BE6B0C /* GWRLMArea.h */,
+				88D2E18A1BDBBAC600BE6B0C /* GWRLMArea.m */,
+			);
+			name = Area;
+			sourceTree = "<group>";
+		};
+		88D2E18F1BDBD5AD00BE6B0C /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				88D2E1901BDBD5D000BE6B0C /* NSDate+GWDateExtension.h */,
+				88D2E1911BDBD5D000BE6B0C /* NSDate+GWDateExtension.m */,
+				880367DA1BDC43E900688E94 /* RLMResults+GWExtension.h */,
+				880367DB1BDC43E900688E94 /* RLMResults+GWExtension.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		88E6A7071B5EC09000DF93A3 /* Area Objects */ = {
 			isa = PBXGroup;
 			children = (
@@ -300,6 +411,26 @@
 			name = "Image Objects";
 			sourceTree = "<group>";
 		};
+		B329D2BD3E30C241CF0305D9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				28934CFAD2FC793F5EBEBAC6 /* libPods-GWFramework.a */,
+				E060F5434DED5B35CE54A63C /* libPods-GWFrameworkTests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F810D02A3799E66CA445325F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7CD2FED1366C742391BBC5FC /* Pods-GWFramework.debug.xcconfig */,
+				E707E50358F2BC4ED34B2BF6 /* Pods-GWFramework.release.xcconfig */,
+				3226B8977A7208B90A0E4FF9 /* Pods-GWFrameworkTests.debug.xcconfig */,
+				A916B63290F82DE829E88791 /* Pods-GWFrameworkTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -307,9 +438,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 889DB6CD1B5DB15500194FDE /* Build configuration list for PBXNativeTarget "GWFramework" */;
 			buildPhases = (
+				8ED6127510C843BBF8BA23A7 /* Check Pods Manifest.lock */,
 				889DB6A31B5DB15500194FDE /* Sources */,
 				889DB6A41B5DB15500194FDE /* Frameworks */,
 				889DB6A51B5DB15500194FDE /* Resources */,
+				6447E34D44BF5D3A283A2735 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -324,9 +457,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 889DB6D01B5DB15500194FDE /* Build configuration list for PBXNativeTarget "GWFrameworkTests" */;
 			buildPhases = (
+				55C8DAF6B9D98B37C7E56A2E /* Check Pods Manifest.lock */,
 				889DB6BF1B5DB15500194FDE /* Sources */,
 				889DB6C01B5DB15500194FDE /* Frameworks */,
 				889DB6C11B5DB15500194FDE /* Resources */,
+				375246FD446BBC049852FEDD /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -393,30 +528,102 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88B7CD4C1BDC2566004B4BFF /* textTest.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		375246FD446BBC049852FEDD /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GWFrameworkTests/Pods-GWFrameworkTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		55C8DAF6B9D98B37C7E56A2E /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		6447E34D44BF5D3A283A2735 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GWFramework/Pods-GWFramework-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8ED6127510C843BBF8BA23A7 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		889DB6A31B5DB15500194FDE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88D2E1871BDBBAB700BE6B0C /* GWRLMIntention.m in Sources */,
 				889DB6DA1B5E8A1200194FDE /* GWText.m in Sources */,
 				884746D61B62E37200F37627 /* GWDataManager.m in Sources */,
 				88E6A70D1B5EC29900DF93A3 /* GWAreaCulture.m in Sources */,
+				88D2E18E1BDBC86400BE6B0C /* GWRLMIntetionBehavior.m in Sources */,
 				8851752D1B837A380007B16C /* GWIntentionAreaBehavior.m in Sources */,
 				889DB6B01B5DB15500194FDE /* AppDelegate.m in Sources */,
 				889DB6E91B5EA63C00194FDE /* GWIntentionLabel.m in Sources */,
 				889DB6D61B5DBA0000194FDE /* ServerCommunication.m in Sources */,
+				8813A1AF1BDB0A1100E959EC /* GWRealmDataManager.m in Sources */,
 				889DB6B31B5DB15500194FDE /* GWFramework.xcdatamodeld in Sources */,
+				88D2E18B1BDBBAC600BE6B0C /* GWRLMArea.m in Sources */,
 				8875EAB91B6FBA81000AE935 /* GWIntentionPresenter.m in Sources */,
 				88E6A7101B5EC29900DF93A3 /* GWArea.m in Sources */,
+				88D2E1921BDBD5D000BE6B0C /* NSDate+GWDateExtension.m in Sources */,
 				889DB6E11B5E9FAE00194FDE /* GWTag.m in Sources */,
+				880367DC1BDC43E900688E94 /* RLMResults+GWExtension.m in Sources */,
+				88D2E1831BDBBAA700BE6B0C /* GWRLMText.m in Sources */,
 				885175331B837AAE0007B16C /* GWIntention.m in Sources */,
 				88E6A70A1B5EC29800DF93A3 /* GWImage.m in Sources */,
 				889DB6B61B5DB15500194FDE /* ViewController.m in Sources */,
+				88D2E17E1BDBB1E400BE6B0C /* GWRLMImage.m in Sources */,
 				8875EAC01B70F8DF000AE935 /* GWLocalizedBundle.m in Sources */,
 				889DB6DE1B5E8AF200194FDE /* GWCoreDataManager.m in Sources */,
 				889DB6AD1B5DB15500194FDE /* main.m in Sources */,
@@ -557,12 +764,14 @@
 		};
 		889DB6CE1B5DB15500194FDE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7CD2FED1366C742391BBC5FC /* Pods-GWFramework.debug.xcconfig */;
 			buildSettings = {
 				ARCHS = (
 					"$(ARCHS_STANDARD)",
 					i386,
 				);
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = GWFramework/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -571,8 +780,10 @@
 		};
 		889DB6CF1B5DB15500194FDE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E707E50358F2BC4ED34B2BF6 /* Pods-GWFramework.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = GWFramework/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -581,6 +792,7 @@
 		};
 		889DB6D11B5DB15500194FDE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3226B8977A7208B90A0E4FF9 /* Pods-GWFrameworkTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -600,6 +812,7 @@
 		};
 		889DB6D21B5DB15500194FDE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A916B63290F82DE829E88791 /* Pods-GWFrameworkTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (

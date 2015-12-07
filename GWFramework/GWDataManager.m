@@ -74,6 +74,16 @@
     return intentions;
 }
 
+-(NSArray *)fetchIntentionsWithCulture:(NSString *)theCulture withId:(NSString *)theId {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"culture like[c] '%@' AND intentionId like[c] '%@'", theCulture, theId]];
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWIntention"];
+    [request setPredicate:predicate];
+    
+    NSArray *theIntentions = [[[GWCoreDataManager sharedInstance] mainObjectContext] executeFetchRequest:request error:nil];
+    
+    return theIntentions;
+}
+
 // MARK: Text methods
 
 -(NSInteger)fetchNumTexts {
@@ -94,6 +104,16 @@
 
 -(NSArray*)fetchTextsForCulture:(NSString *)theCulture {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"culture like[c] '%@'", theCulture]];
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWText"];
+    [request setPredicate:predicate];
+    
+    NSArray *theTexts = [[[GWCoreDataManager sharedInstance] mainObjectContext] executeFetchRequest:request error:nil];
+    
+    return theTexts;
+}
+
+-(NSArray*)fetchTextsForCulture:(NSString *)theCulture ignoringTextIds:(NSArray *)theTextIds {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"culture like[c] %@ AND textId NOT IN %@", theTextIds];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWText"];
     [request setPredicate:predicate];
     
@@ -319,10 +339,94 @@
         int randPos = arc4random_uniform((int)allMutableImages.count);
         [theImagesToReturn addObject:[allMutableImages objectAtIndex:randPos]];
         [allMutableImages removeObjectAtIndex:randPos];
+        imagesFound++;
+    }
+    
+    return theImagesToReturn;
+}
+
+-(NSArray*)fetchRandomImagesWithPredicate:(NSPredicate *)thePredicate withNum:(int)numImages {
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWImage"];
+    [request setPredicate:thePredicate];
+    
+    NSMutableArray *theImagesToReturn = [NSMutableArray array];
+    
+    NSArray *theImages = [[[GWCoreDataManager sharedInstance] mainObjectContext] executeFetchRequest:request error:nil];
+    NSMutableArray *allMutableImages = [NSMutableArray arrayWithArray:theImages];
+    
+    int imagesFound = 0;
+    
+    while (imagesFound < numImages && allMutableImages.count > 0) {
+        int randPos = arc4random_uniform((int)allMutableImages.count);
+        [theImagesToReturn addObject:[allMutableImages objectAtIndex:randPos]];
+        [allMutableImages removeObjectAtIndex:randPos];
+        imagesFound++;
+    }
+    
+    
+    return theImagesToReturn;
+}
+
+-(NSMutableArray*)images:(NSArray *)theImages removeImages:(NSArray *)theImagesToRemove {
+    
+    NSMutableArray *imagesToReturn = [NSMutableArray arrayWithArray:theImages];
+    
+    for (NSString *imageIdToRemove in theImagesToRemove) {
+        for (GWImage *currentImage in theImages) {
+            if ([currentImage.imageId isEqualToString:imageIdToRemove]) {
+                [imagesToReturn removeObject:currentImage];
+            }
+        }
+    }
+    
+    return imagesToReturn;
+    
+}
+
+-(NSArray*)fetchRandomImagesWithNum:(int)numImages ignoringImages:(NSArray*)theImageIdsIgnore numberOfImagesInDatabase:(int)numDBImages {
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWImage"];
+    
+    NSMutableArray *theImagesToReturn = [NSMutableArray array];
+    
+    NSArray *theImages = [[[GWCoreDataManager sharedInstance] mainObjectContext] executeFetchRequest:request error:nil];
+    
+    NSMutableArray *allMutableImages;
+    
+    if (theImages.count > numDBImages && theImageIdsIgnore != nil) {
+        allMutableImages = [self images:theImages removeImages:theImageIdsIgnore];
+    }
+    else {
+        allMutableImages = [NSMutableArray arrayWithArray:theImages];
+    }
+    
+    int imagesFound = 0;
+    
+    while (imagesFound != numImages && allMutableImages.count > 0) {
+        int randPos = arc4random_uniform((int)allMutableImages.count);
+        [theImagesToReturn addObject:[allMutableImages objectAtIndex:randPos]];
+        [allMutableImages removeObjectAtIndex:randPos];
         imagesFound = imagesFound + 1;
     }
     
     return theImagesToReturn;
+}
+
+-(NSSet *)fetchImageSetWithImagePaths:(NSArray *)theImagePaths {
+    
+    NSArray *theImages = nil;
+    
+    if (theImagePaths != nil) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"imageId IN %@", theImagePaths];
+        
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"GWImage"];
+        [fetchRequest setPredicate:predicate];
+        
+        theImages = [[[GWCoreDataManager sharedInstance] mainObjectContext] executeFetchRequest:fetchRequest error:nil];
+    }
+    
+    return [NSSet setWithArray:theImages];
+    
 }
 
 -(NSArray*)fetchImages {
@@ -466,6 +570,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"GWText"];
     [request setPredicate:predicate];
     
+    // causes bad instrauction
     NSArray *theTexts = [[[GWCoreDataManager sharedInstance] childContext] executeFetchRequest:request error:nil];
     
     return theTexts;
@@ -600,6 +705,26 @@
 
 // MARK: persist and update methods
 
+-(NSArray *)updatedTextsWithArea:(NSString *)theArea intentionId:(NSString *)theIntentionId culture:(NSString *)theCulture texts:(NSArray *)theTexts {
+    NSMutableArray *textToReturn = [NSMutableArray array];
+    NSManagedObjectContext *childContext = [[GWCoreDataManager sharedInstance] childContext];
+    GWDataManager *dataMan = [[GWDataManager alloc] init];
+    NSArray *textsForIntention = [dataMan fetchTextsOnBackgroundThreadForIntentionId:theIntentionId withCulture:theCulture];
+    //NSLog(@"Texts for intention: %@", textsForIntention);
+    
+    for (NSDictionary *textJson in theTexts) {
+        
+        GWText *text = [dataMan persistTextOrUpdateWithJson:textJson withArray:textsForIntention withContext:childContext];
+        [textToReturn addObject:text.textId];
+        
+    }
+    
+    //NSLog(@"texts after for loop");
+    [childContext save:nil];
+    
+    return textToReturn;
+}
+
 -(GWText*)persistTextOrUpdateWithJson:(NSDictionary*)textJson withArray:(NSArray*)theArray withContext:(NSManagedObjectContext*)theContext {
     
     NSString *textId = [textJson objectForKey:@"TextId"];
@@ -663,6 +788,15 @@
 }
 
 #pragma mark - Server Comm
+
+-(void)downloadImageThemesWithCompletion:(void (^)(NSDictionary *theImageThemes, NSError *error))block {
+    [block copy];
+    
+    [serverComm downloadImageThemesWithCompletion:^(NSDictionary *theImageThemes, NSError *error) {
+        block(theImageThemes, error);
+    }];
+    
+}
 
 -(void)downloadImagesAndPersistWithRelativePath:(NSString*)theRelativePath withNumImagesToDownload:(NSInteger)theNumImages withCompletion:(void(^)(NSArray *theImageIds, NSError *error))block {
     [block copy];
@@ -806,6 +940,9 @@
             NSLog(@"dowloaded image with url: %@", theImagePath);
             if (theImageId != nil) {
                 [theImages addObject:theImageId];
+            }
+            else {
+                NSLog(@"couldn't download image with url: %@", theImagePath);
             }
             
             numImages = numImages + 1;
@@ -1057,12 +1194,12 @@
 }
 
 
--(void)downloadIntentionsWithArea:(NSString *)theArea withCulture:(NSString*)theCulture withCompletion:(void (^)(NSArray *theIntentionIds, NSError *error))block {
+-(NSURLSessionDataTask *)downloadIntentionsWithArea:(NSString *)theArea withCulture:(NSString*)theCulture withCompletion:(void (^)(NSArray *theIntentionIds, NSError *error))block {
     [block copy];
     
     NSLog(@"downloading intentions with area");
     
-    [serverComm downloadIntentionsWithArea:theArea withCulture:theCulture withCompletion:^(NSArray *intentions, NSError *error) {
+    NSURLSessionDataTask *dataTask = [serverComm downloadIntentionsWithArea:theArea withCulture:theCulture withCompletion:^(NSArray *intentions, NSError *error) {
         NSLog(@"Finished downloading intentions with area");
         NSMutableArray *intentionsToReturn = [NSMutableArray array];
         NSManagedObjectContext *childContext = [[GWCoreDataManager sharedInstance] childContext];
@@ -1083,6 +1220,7 @@
         
     }];
     
+    return dataTask;
 }
 
 

@@ -16,6 +16,9 @@
 @property (nonatomic, strong) NSString *areaName;
 @property (nonatomic, strong) NSString *acceptLanguage;
 
+// Mark: Theme download
+-(void)downloadImageThemesWithCompletion:(void (^)(NSDictionary *theImageThemes, NSError *error))block;
+
 // MARK: Image download
 -(void)downloadImageIdsForRelativePath:(NSString*)theRelativePath withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;
 -(void)downloadImageIdsForIntentionSlug:(NSString*)theIntentionSlug withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;
@@ -30,7 +33,7 @@
 
 /* Currently not supported as the data is not fully constructed **/
 -(void)downloadAllIntentionsWithCulture:(NSString*)theCulture withCompletion:(void (^)(NSArray *intentions, NSError *error))block;
--(void)downloadIntentionsWithArea:(NSString*)theArea withCulture:(NSString*)theCulture withCompletion:(void (^)(NSArray *intentions, NSError *error))block;
+-(NSURLSessionDataTask *)downloadIntentionsWithArea:(NSString*)theArea withCulture:(NSString*)theCulture withCompletion:(void (^)(NSArray *intentions, NSError *error))block;
 
 // MARK: Area Downloads
 

@@ -24,6 +24,14 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
 
 /** accept language defaults to fr-FR, or france, areaName should include at the end. */
 
+-(id)init {
+    if (self = [super init]) {
+        session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    }
+    
+    return self;
+}
+
 -(id)initWithAreaName:(NSString *)theAreaName {
     
     if (self = [super init]) {
@@ -50,6 +58,35 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
     return self;
 }
 
+
+#pragma mark - Image Themes Download
+
+-(void)downloadImageThemesWithCompletion:(void (^)(NSDictionary *, NSError *))block {
+    [block copy];
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://gw-static-apis.azurewebsites.net/data/liptip/moodthemes.json"]];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+    
+    [request setHTTPMethod:@"GET"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    
+    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        if (error == nil) {
+            NSDictionary *themes = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            block(themes, nil);
+        }
+        else {
+            block(nil, error);
+        }
+        
+    }] resume];
+    
+    
+    
+}
 
 #pragma mark - Image Downloading
 
@@ -216,7 +253,7 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
             if (data != nil) {
                 NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
                 
-                NSLog(@"texts with intention id: %@", array);
+                //NSLog(@"texts with intention id: %@", array);
                 
                 block(array, error);
             }
@@ -308,7 +345,7 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
     }] resume];
 }
 
--(void)downloadIntentionsWithArea:(NSString *)theArea withCulture:(NSString *)theCulture withCompletion:(void (^)(NSArray *, NSError *))block {
+-(NSURLSessionDataTask *)downloadIntentionsWithArea:(NSString *)theArea withCulture:(NSString *)theCulture withCompletion:(void (^)(NSArray *, NSError *))block {
     [block copy];
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/intentions", apiPath, theArea]];
@@ -319,7 +356,7 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:theCulture forHTTPHeaderField:@"Accept-Language"];
     
-    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
        
         if (error == nil) {
             if (data != nil) {
@@ -338,7 +375,11 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
             block(nil, error);
         }
         
-    }] resume];
+    }];
+    
+    [dataTask resume];
+    
+    return dataTask;
     
 }
 
