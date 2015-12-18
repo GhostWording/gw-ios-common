@@ -120,6 +120,7 @@
 		88E6A70C1B5EC29900DF93A3 /* GWAreaCulture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWAreaCulture.m; sourceTree = "<group>"; };
 		88E6A70E1B5EC29900DF93A3 /* GWArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWArea.h; sourceTree = "<group>"; };
 		88E6A70F1B5EC29900DF93A3 /* GWArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWArea.m; sourceTree = "<group>"; };
+		88EBE9E91C1621B20053A373 /* GWFramework 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "GWFramework 2.xcdatamodel"; sourceTree = "<group>"; };
 		A916B63290F82DE829E88791 /* Pods-GWFrameworkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GWFrameworkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GWFrameworkTests/Pods-GWFrameworkTests.release.xcconfig"; sourceTree = "<group>"; };
 		E060F5434DED5B35CE54A63C /* libPods-GWFrameworkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GWFrameworkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E707E50358F2BC4ED34B2BF6 /* Pods-GWFramework.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GWFramework.release.xcconfig"; path = "Pods/Target Support Files/Pods-GWFramework/Pods-GWFramework.release.xcconfig"; sourceTree = "<group>"; };
@@ -862,9 +863,10 @@
 		889DB6B11B5DB15500194FDE /* GWFramework.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				88EBE9E91C1621B20053A373 /* GWFramework 2.xcdatamodel */,
 				889DB6B21B5DB15500194FDE /* GWFramework.xcdatamodel */,
 			);
-			currentVersion = 889DB6B21B5DB15500194FDE /* GWFramework.xcdatamodel */;
+			currentVersion = 88EBE9E91C1621B20053A373 /* GWFramework 2.xcdatamodel */;
 			path = GWFramework.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -174,8 +174,8 @@
 -(void)downloadImagePathsWithRelativePath:(NSString*)theRelativePath withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;
 -(void)downloadImagePathsWithIntentionSlug:(NSString*)theIntentionSlug withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;
 -(void)downloadImagePathsWithRecipientId:(NSString*)theRecipientId withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;
--(void)downloadImagesWithUrls:(NSArray*)theImageUrls withCompletion:(void (^)(NSArray *theImagePaths, NSError *error))block;
--(void)downloadImageWithUrl:(NSString*)theImageUrl withCompletion:(void (^)(NSString *imageId, NSError *error))block;
+-(void)downloadImagesWithUrls:(NSArray *)theImageUrls isRelativeURL:(BOOL)isRelative withCompletion:(void (^)(NSArray *, NSError *))block;
+-(void)downloadImageWithRelativeUrl:(NSString*)theImageUrl withCompletion:(void (^)(NSString *imageId, NSError *error))block;
 
 #pragma mark - Text Download Methods
 

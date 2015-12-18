@@ -20,6 +20,7 @@
 @dynamic intentionDescription;
 @dynamic intentionId;
 @dynamic label;
+@dynamic mediaUrl;
 @dynamic mostRecentTextUpdate;
 @dynamic mostRecentTextUpdateEpoch;
 @dynamic recurring;
@@ -69,6 +70,11 @@
     
     if (jsonDict[@"SortOrderInArea"] != [NSNull null]) {
         self.sortOrderInArea = jsonDict[@"SortOrderInArea"];
+    }
+    
+    if (jsonDict[@"MediaUrl"] != [NSNull null
+                                  ]) {
+        self.mediaUrl = jsonDict[@"MediaUrl"];
     }
     
     self.impersonal = jsonDict[@"Impersonal"];

@@ -224,13 +224,20 @@ const NSString *apiImagePath = @"http://gw-static.azurewebsites.net";
     }] resume];
 }
 
--(NSData*)downloadImageWithImagePath:(NSString *)theImagePath {
+-(NSData*)downloadImageWithRelativeImagePath:(NSString *)theImagePath {
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", apiImagePath, theImagePath]];
     NSData *imageData = [NSData dataWithContentsOfURL:url];
     
     return imageData;
     
+}
+
+-(NSData*)downloadImageWithImageURL:(NSString *)theImagePath {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@", theImagePath]];
+    NSData *imageData = [NSData dataWithContentsOfURL:url];
+    
+    return imageData;
 }
 
 #pragma mark - Text Downloading

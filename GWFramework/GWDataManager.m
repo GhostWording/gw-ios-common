@@ -827,7 +827,7 @@
         NSArray *randomImagePaths = [newDataMan randomIndexesFromArray:imagePathsLeft withNumRandomIndexes:theNumImages];
         NSLog(@"num random images: %d", (int)randomImagePaths.count);
         
-        [newDataMan downloadImagesWithUrls:randomImagePaths withCompletion:^(NSArray *theImagePaths, NSError *error) {
+        [newDataMan downloadImagesWithUrls:randomImagePaths isRelativeURL:YES withCompletion:^(NSArray *theImagePaths, NSError *error) {
             
             block(theImagePaths, error);
             
@@ -863,7 +863,7 @@
         NSArray *randomImagePaths = [newDataMan randomIndexesFromArray:imagePathsLeft withNumRandomIndexes:theNumImages];
         NSLog(@"num random images: %d", (int)randomImagePaths.count);
         
-        [newDataMan downloadImagesWithUrls:randomImagePaths withCompletion:^(NSArray *theImagePaths, NSError *error) {
+        [newDataMan downloadImagesWithUrls:randomImagePaths isRelativeURL:YES withCompletion:^(NSArray *theImagePaths, NSError *error) {
             
             block(theImagePaths, error);
             
@@ -893,7 +893,7 @@
         // get random image paths from those left based on the num images to download
         NSArray *randomImagePaths = [newDataMan randomIndexesFromArray:imagePathsLeft withNumRandomIndexes:theNumImages];
         
-        [newDataMan downloadImagesWithUrls:randomImagePaths withCompletion:^(NSArray *theImagePaths, NSError *error) {
+        [newDataMan downloadImagesWithUrls:randomImagePaths isRelativeURL:YES withCompletion:^(NSArray *theImagePaths, NSError *error) {
            
             block(theImagePaths, error);
             
@@ -927,7 +927,7 @@
     }];
 }
 
--(void)downloadImagesWithUrls:(NSArray *)theImageUrls withCompletion:(void (^)(NSArray *, NSError *))block {
+-(void)downloadImagesWithUrls:(NSArray *)theImageUrls isRelativeURL:(BOOL)isRelative withCompletion:(void (^)(NSArray *, NSError *))block {
     [block copy];
     
     NSMutableArray *theImages = [NSMutableArray array];
@@ -936,40 +936,66 @@
     
     for (NSString *theImagePath in theImageUrls) {
         
-        [self downloadImageWithUrl:theImagePath withCompletion:^(NSString *theImageId, NSError *error) {
-            NSLog(@"dowloaded image with url: %@", theImagePath);
-            if (theImageId != nil) {
-                [theImages addObject:theImageId];
-            }
-            else {
-                NSLog(@"couldn't download image with url: %@", theImagePath);
-            }
-            
-            numImages = numImages + 1;
-                        
-            if (numImages == allImagesCount) {
-                NSLog(@"all images to download: %d, num images downloaded: %d", numImages, allImagesCount);
-                block(theImages, nil);
-            }
-            
-        }];
+        if (isRelative) {
+            [self downloadImageWithRelativeUrl:[NSString stringWithFormat:@"%@%@", @"http://gw-static.azurewebsites.net", theImagePath] withCompletion:^(NSString *theImageId, NSError *error) {
+                NSLog(@"dowloaded image with url: %@", theImagePath);
+                if (theImageId != nil) {
+                    [theImages addObject:theImageId];
+                }
+                else {
+                    NSLog(@"couldn't download image with url: %@", theImagePath);
+                }
+                
+                numImages = numImages + 1;
+                
+                if (numImages == allImagesCount) {
+                    NSLog(@"all images to download: %d, num images downloaded: %d", numImages, allImagesCount);
+                    block(theImages, nil);
+                }
+                
+            }];
+        }
+        else {
+            [self downloadImageWithRelativeUrl:theImagePath withCompletion:^(NSString *theImageId, NSError *error) {
+                NSLog(@"dowloaded image with url: %@", theImagePath);
+                if (theImageId != nil) {
+                    [theImages addObject:theImageId];
+                }
+                else {
+                    NSLog(@"couldn't download image with url: %@", theImagePath);
+                }
+                
+                numImages = numImages + 1;
+                
+                if (numImages == allImagesCount) {
+                    NSLog(@"all images to download: %d, num images downloaded: %d", numImages, allImagesCount);
+                    block(theImages, nil);
+                }
+                
+            }];
+        }
         
     }
     
 }
 
--(void)downloadImageWithUrl:(NSString*)theImageUrl withCompletion:(void (^)(NSString *imageId, NSError *error))block {
+-(void)downloadImageWithRelativeUrl:(NSString*)theImageUrl withCompletion:(void (^)(NSString *imageId, NSError *error))block {
     [block copy];
     
     NSManagedObjectContext *childContext = [[GWCoreDataManager sharedInstance] childContext];
     
-    NSData *theData = [serverComm downloadImageWithImagePath:theImageUrl];
+    NSData *theData = [serverComm downloadImageWithImageURL:theImageUrl];
+    
+    NSMutableString *mutableImageId = [NSMutableString stringWithString:theImageUrl];
+    if ([theImageUrl hasPrefix:@"http://gw-static.azurewebsites.net"]) {
+        [mutableImageId deleteCharactersInRange:NSMakeRange(0, [NSString stringWithFormat:@"http://gw-static.azurewebsites.net"].length)];
+    }
     
     if (theData == nil) {
         block(nil, [NSError errorWithDomain:@"api.cvd.io" code:1000 userInfo:@{NSLocalizedDescriptionKey : @"No image found"}]);
     }
     else {
-        GWImage *theImage = [GWImage createGWImageWithImagePath:theImageUrl withImageData:theData withManagedContext:childContext];
+        GWImage *theImage = [GWImage createGWImageWithImagePath:mutableImageId withImageData:theData withManagedContext:childContext];
         
         [childContext save:nil];
         

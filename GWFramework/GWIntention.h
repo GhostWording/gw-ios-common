@@ -20,6 +20,7 @@
 @property (nonatomic, retain) NSString * intentionDescription;
 @property (nonatomic, retain) NSString * intentionId;
 @property (nonatomic, retain) NSString * label;
+@property (nonatomic, retain) NSString *mediaUrl;
 @property (nonatomic, retain) NSDate * mostRecentTextUpdate;
 @property (nonatomic, retain) NSNumber * mostRecentTextUpdateEpoch;
 @property (nonatomic, retain) NSString * recurring;
