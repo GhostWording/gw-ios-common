@@ -1009,6 +1009,66 @@
 #pragma mark - Text downloads
 
 
+
+// MARK: Download for all texts using operations, queues and blocks
+
+-(void)downloadAllTextsWithBlockForArea:(NSString *)theArea withCulture:(NSString *)theCulture withCompletion:(void (^)(NSArray *, NSError *))block {
+    
+    GWDataManager *theDataMan = [[GWDataManager alloc] init];
+    
+    [theDataMan downloadIntentionsWithArea:theArea withCulture:theCulture withCompletion:^(NSArray *intentionIds, NSError *error) {
+        
+        NSLog(@"downlaod intention response");
+        
+        GWDataManager *newDataMan = [[GWDataManager alloc] init];
+        
+        NSArray *allIntentions = [newDataMan fetchIntentionsOnBackgroundThread];
+        //NSLog(@"all intentions: %@", allIntentions);
+        NSArray *intentionsFromArray = [allIntentions valueForKey:@"intentionId"];
+        NSMutableSet *set = [[NSMutableSet alloc] initWithArray:intentionsFromArray];
+        intentionsFromArray = [set allObjects];
+        
+        if (error) {
+            block(nil, error);
+            return ;
+        }
+
+     
+        NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
+        GWDataManager *secondDataMan = [[GWDataManager alloc] init];
+        
+        [secondDataMan downloadTextsWithBlockForArea:theArea queue:operationQueue dataMan:secondDataMan withIntentionIds:intentionsFromArray withCulture:theCulture withCompletion:block];
+     
+    }];
+    
+    
+}
+
+
+-(void)downloadTextsWithBlockForArea:(NSString *)theArea queue:(NSOperationQueue*)theQueue dataMan:(GWDataManager*)theDataMan withIntentionIds:(NSArray *)theIntentionsIds withCulture:(NSString *)theCulture withCompletion:(void (^)(NSArray *, NSError *))block {
+    [block copy];
+    
+    
+    __block int numIntentionsDown = 0;
+    
+    for (NSString *intentionId in theIntentionsIds) {
+        
+        [theQueue addOperationWithBlock:^{
+            [theDataMan downloadTextsWithArea:theArea withIntentionId:intentionId withCulture:theCulture withCompletion:^(NSArray *textIds, NSError *error) {
+                
+                numIntentionsDown++;
+                if (numIntentionsDown == theIntentionsIds.count) {
+                    block(nil, error);
+                }
+                
+            }];
+        }];
+    
+    }
+    
+}
+
+
 // MARK: Download for all texts
 
 -(void)downloadAllTextsForArea:(NSString *)theArea withCulture:(NSString*)theCulture withCompletion:(void (^)(NSArray *, NSError *))block {
@@ -1037,7 +1097,7 @@
         
         GWDataManager *anotherDataMan = [[GWDataManager alloc] init];
         [anotherDataMan downloadTextsWithArea:theArea withIntentionIds:intentionsFromArray withCulture:theCulture withCompletion:^(NSArray *textIds, NSError *error) {
-            NSLog(@"downloading texts on main thread in text ids: %@", textIds);
+            //NSLog(@"downloading texts on main thread in text ids: %@", textIds);
             block(textIds, error);
         }];
         

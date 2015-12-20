@@ -179,6 +179,7 @@
 
 #pragma mark - Text Download Methods
 
+-(void)downloadAllTextsWithBlockForArea:(NSString *)theArea withCulture:(NSString *)theCulture withCompletion:(void (^)(NSArray *, NSError *))block;
 
 -(void)downloadAllTextsForArea:(NSString *)theArea withCulture:(NSString*)theCulture withCompletion:(void (^)(NSArray *, NSError *))block;
 
